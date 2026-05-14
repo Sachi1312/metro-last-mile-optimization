@@ -1,0 +1,70 @@
+station_name,line,total_responses,auto_problem_score,walking_problem_score,bus_problem_score,crowding_score,safety_score,lmpi_score,severity_label,recommended_last_mile,survey_satisfaction,survey_auto_avail,survey_bus_freq,survey_safety,survey_walkability
+BKC,3,67,76.4,68.1,49.9,68.3,40.2,81.5,Critical,E-Rickshaw,3.1,1.6,2.9,3.3,2.2
+SEEPZ,3,55,75.0,55.7,75.2,54.8,64.0,79.8,Critical,Shared Auto,3.2,2.0,1.6,2.4,2.6
+MIDC,3,101,87.0,63.2,71.1,54.7,25.9,79.4,Critical,E-Rickshaw,3.2,1.2,2.0,3.9,2.4
+Worli,3,58,58.0,55.8,52.2,58.4,26.8,70.7,Critical,Auto Rickshaw,3.7,2.6,2.8,3.6,2.6
+Gundavali,7,92,50.9,51.8,47.4,46.2,57.7,70.4,Critical,Auto Rickshaw,3.7,2.8,2.8,2.4,2.7
+Marol Naka,3,88,55.5,41.4,44.7,56.5,30.0,67.4,Critical,Shared Auto,3.7,2.4,3.0,3.7,3.3
+Ghatkopar,1,56,34.5,41.7,23.7,63.4,35.0,67.2,Critical,BEST Bus,3.9,3.4,3.9,3.5,3.2
+Dahisar (E),7,96,45.2,48.0,30.7,56.6,46.5,67.1,Critical,BEST Bus,3.5,3.1,3.8,3.1,3.0
+Andheri,1,81,32.3,40.5,20.7,61.9,41.9,66.3,Critical,Auto Rickshaw,3.9,3.6,4.1,3.2,3.2
+Marol Naka L1,1,66,49.0,47.6,43.2,56.1,26.6,66.1,Critical,Auto Rickshaw,3.8,2.8,3.2,3.9,2.9
+CSMT,3,116,37.6,30.0,13.8,60.7,56.4,65.6,Critical,BEST Bus,3.9,3.3,4.5,2.5,3.8
+Dahisar (E) 2A,2A,118,41.0,56.5,27.0,51.0,41.5,65.5,Critical,BEST Bus,3.7,3.3,3.9,3.4,2.4
+Dadar,3,103,28.6,38.6,12.3,62.0,57.7,65.0,Critical,Auto Rickshaw,3.9,3.9,4.6,2.6,3.3
+Mumbai Central,3,50,31.3,38.2,29.4,59.0,26.6,64.9,Critical,Auto Rickshaw,3.8,3.8,3.7,3.9,3.3
+D.N. Nagar,1,95,45.9,44.8,40.3,54.7,20.3,63.1,High,Auto Rickshaw,3.9,2.9,3.3,4.1,3.2
+DN Nagar,2A,97,36.0,48.4,37.8,53.5,39.1,62.6,High,Auto Rickshaw,3.6,3.6,3.4,3.4,2.9
+Dindoshi,7,95,68.4,59.5,65.9,48.3,62.6,61.6,High,Shared Auto,3.5,2.2,2.2,2.2,2.4
+Kurar,7,104,72.0,59.7,69.1,44.5,52.4,61.4,High,Shared Auto,3.5,1.9,2.0,2.8,2.5
+Mandapeshwar,2A,97,67.3,68.7,59.3,47.6,58.7,61.4,High,E-Rickshaw,3.2,2.1,2.4,2.4,2.1
+Aarey JVLR,3,117,93.8,97.1,93.8,34.8,44.7,61.0,High,E-Rickshaw,2.7,1.1,1.1,3.1,1.1
+Devipada,7,61,93.1,80.9,94.0,43.6,83.9,61.0,High,E-Rickshaw,3.0,1.1,1.0,1.6,1.6
+Churchgate,3,104,45.5,38.3,31.7,58.4,58.2,61.0,High,BEST Bus,3.7,2.9,3.6,2.5,3.3
+Hutatma Chowk,3,53,62.7,52.5,61.8,51.7,43.4,61.0,High,Shared Auto,3.6,2.3,2.0,3.0,2.7
+Rashtriya Udyan,7,82,93.4,89.2,91.0,41.5,69.6,61.0,High,E-Rickshaw,2.8,1.2,1.1,2.2,1.1
+Ovaripada,7,92,92.7,83.5,85.2,43.3,80.1,61.0,High,E-Rickshaw,2.8,1.1,1.4,1.7,1.3
+Cuffe Parade,3,71,74.2,62.1,66.8,45.1,53.9,61.0,High,E-Rickshaw,3.3,1.9,2.1,2.7,2.5
+Nariman Point,3,63,67.0,63.3,61.1,45.8,20.2,61.0,High,E-Rickshaw,3.4,1.9,2.5,4.2,2.1
+Goregaon (W),2A,47,35.6,51.1,28.6,56.9,62.3,59.6,High,Auto Rickshaw,3.7,3.5,3.9,2.5,2.8
+Eksar,2A,46,59.5,64.1,67.1,43.5,56.0,58.7,High,Auto Rickshaw,3.3,2.6,2.0,2.7,2.3
+Poisar,7,113,71.4,50.3,71.3,47.8,37.4,58.4,High,Shared Auto,3.3,2.1,2.0,3.4,2.9
+Vidhan Bhavan,3,93,62.3,53.5,58.8,52.6,22.6,58.2,High,Shared Auto,3.5,2.2,2.6,3.9,2.8
+Goregaon (E),7,56,46.9,51.8,35.7,56.7,68.6,58.1,High,Auto Rickshaw,3.5,3.0,3.5,2.0,2.8
+Anand Nagar,2A,90,67.1,62.2,59.0,45.7,45.4,57.9,High,E-Rickshaw,3.3,2.0,2.6,3.2,2.3
+Shimpoli,2A,115,58.3,56.8,65.8,45.7,63.1,57.8,High,Auto Rickshaw,3.5,2.5,2.1,2.4,2.6
+Dahanukarwadi,2A,86,68.2,58.7,56.2,48.0,45.3,57.3,High,Shared Auto,3.3,2.1,2.6,3.2,2.5
+Oshiwara,2A,100,63.2,47.4,67.5,48.2,57.3,57.2,High,Shared Auto,3.7,2.2,1.9,2.5,3.0
+Mahalaxmi,3,82,55.0,47.3,50.3,51.1,56.5,56.8,High,Auto Rickshaw,3.5,2.6,3.0,2.6,3.0
+Jogeshwari (E),7,62,47.4,50.1,44.1,54.0,47.2,56.5,High,Auto Rickshaw,3.8,3.0,3.1,3.0,3.0
+Akurli,7,68,63.2,63.6,69.3,42.8,23.3,56.0,High,E-Rickshaw,3.4,2.4,2.0,4.0,2.3
+Kalbadevi,3,104,48.0,36.3,40.1,57.2,34.4,55.9,High,Auto Rickshaw,3.7,2.9,3.2,3.5,3.6
+Jagruti Nagar,1,118,71.3,53.7,55.4,46.6,32.4,55.1,High,Shared Auto,3.4,2.0,2.6,3.8,2.8
+Magathane,7,58,63.7,56.5,48.6,47.6,51.5,54.7,High,Shared Auto,3.3,2.2,3.1,2.9,2.5
+Valnai-Meeth Chowky,2A,108,61.9,56.8,59.6,49.8,30.3,54.3,High,Shared Auto,3.3,2.4,2.6,3.7,2.6
+Bangur Nagar,2A,50,63.0,51.8,55.7,47.2,46.8,54.3,High,Shared Auto,3.5,2.1,2.4,3.0,3.0
+Sitaladevi,3,116,53.4,54.5,60.0,48.6,52.8,54.0,High,Auto Rickshaw,3.4,2.7,2.4,2.7,2.6
+Dharavi,3,100,44.6,43.0,44.5,58.8,36.0,53.8,High,Auto Rickshaw,3.7,3.1,3.1,3.5,3.4
+Kandivali (E),7,56,43.6,45.0,34.4,54.5,55.4,53.4,High,Auto Rickshaw,3.7,3.3,3.5,2.6,3.3
+Acharya Atre Chowk,3,106,62.9,54.1,48.0,47.5,43.1,52.8,High,Shared Auto,3.6,2.3,2.9,3.1,2.8
+Chakala (JB Nagar),1,83,46.1,55.6,45.6,51.8,33.1,52.6,High,Auto Rickshaw,3.6,3.1,3.0,3.5,2.6
+Malad (W),2A,96,26.1,40.4,21.5,58.9,52.4,52.4,High,Auto Rickshaw,3.6,4.0,4.2,2.7,3.1
+Kandarpada,2A,117,62.7,58.1,50.0,41.9,37.1,52.3,High,Shared Auto,3.6,2.3,3.1,3.3,2.5
+Lower Malad,2A,113,61.2,61.4,50.2,46.0,25.4,52.0,High,E-Rickshaw,3.7,2.3,2.9,4.0,2.3
+Siddhivinayak,3,111,45.9,46.2,49.5,55.0,37.5,51.3,Medium,Auto Rickshaw,3.6,3.1,2.8,3.5,3.1
+Versova,1,49,47.3,49.6,57.7,55.1,45.5,51.1,Medium,Auto Rickshaw,3.5,3.2,2.8,3.1,3.1
+Saki Naka,1,115,53.1,55.2,51.2,50.0,40.7,51.1,Medium,Auto Rickshaw,3.5,2.9,2.7,3.3,2.5
+Asalpha,1,74,63.6,55.4,53.8,44.1,19.6,51.0,Medium,Shared Auto,3.6,2.4,2.6,4.2,2.6
+WEH,1,77,39.9,56.3,45.6,46.6,40.0,50.9,Medium,Auto Rickshaw,3.6,3.5,3.0,3.2,2.4
+Azad Nagar,1,111,64.7,60.8,46.0,43.8,18.6,50.8,Medium,E-Rickshaw,3.7,2.2,3.1,4.2,2.3
+Lower Oshiwara,2A,83,56.8,51.3,57.0,49.1,27.2,50.7,Medium,Auto Rickshaw,3.3,2.7,2.5,3.9,2.7
+Girgaon,3,106,52.9,54.8,46.5,49.3,26.2,48.2,Medium,Auto Rickshaw,3.7,2.7,3.1,3.8,2.7
+Santacruz,3,90,34.5,43.4,35.5,53.9,29.3,47.5,Medium,Auto Rickshaw,3.7,3.6,3.5,3.7,3.3
+Kandivali (W),2A,95,31.1,47.0,31.4,48.9,31.3,45.9,Medium,Auto Rickshaw,3.9,3.7,3.6,3.6,2.8
+Borivali (W),2A,55,29.6,30.9,26.8,59.1,45.0,44.5,Medium,Auto Rickshaw,3.8,3.7,3.8,3.0,3.7
+Grant Road,3,83,47.6,52.5,41.2,47.9,22.3,44.4,Medium,Auto Rickshaw,3.7,2.9,3.2,4.1,2.8
+Borivali (E),7,95,34.6,36.9,28.5,58.0,15.2,43.8,Medium,Auto Rickshaw,3.8,3.6,3.7,4.4,3.5
+CSMIA T1,3,94,20.7,44.6,59.4,22.1,47.7,43.2,Medium,Auto Rickshaw,3.9,4.1,2.3,2.9,3.0
+Airport Road,1,79,27.7,40.7,58.9,33.2,25.1,40.5,Medium,Auto Rickshaw,4.0,4.0,2.5,3.9,3.5
+Sahar Road,3,98,25.6,38.3,56.7,18.9,32.9,40.3,Medium,Auto Rickshaw,4.0,4.1,2.6,3.7,3.3
+CSMIA T2,3,59,19.1,30.5,66.1,16.7,24.9,37.3,Low,Auto Rickshaw,4.2,4.3,2.2,4.0,3.8

@@ -1,0 +1,70 @@
+station_name,line,severity_label,lmpi_score,rf_predicted,xgb_predicted,rf_correct,xgb_correct
+BKC,3,Critical,81.5,Critical,Critical,1,1
+SEEPZ,3,Critical,79.8,Critical,Critical,1,1
+MIDC,3,Critical,79.4,Critical,Critical,1,1
+Worli,3,Critical,70.7,Critical,Critical,1,1
+Gundavali,7,Critical,70.4,Critical,Critical,1,1
+Marol Naka,3,Critical,67.4,Critical,Critical,1,1
+Ghatkopar,1,Critical,67.2,Critical,Critical,1,1
+Dahisar (E),7,Critical,67.1,Critical,Critical,1,1
+Andheri,1,Critical,66.3,Critical,Critical,1,1
+Marol Naka L1,1,Critical,66.1,Critical,Critical,1,1
+CSMT,3,Critical,65.6,Critical,Critical,1,1
+Dahisar (E) 2A,2A,Critical,65.5,Critical,Critical,1,1
+Dadar,3,Critical,65.0,Critical,Critical,1,1
+Mumbai Central,3,Critical,64.9,Critical,Critical,1,1
+D.N. Nagar,1,High,63.1,High,High,1,1
+DN Nagar,2A,High,62.6,High,High,1,1
+Dindoshi,7,High,61.6,High,High,1,1
+Kurar,7,High,61.4,High,High,1,1
+Mandapeshwar,2A,High,61.4,High,High,1,1
+Aarey JVLR,3,High,61.0,High,High,1,1
+Devipada,7,High,61.0,High,High,1,1
+Churchgate,3,High,61.0,High,High,1,1
+Hutatma Chowk,3,High,61.0,High,High,1,1
+Rashtriya Udyan,7,High,61.0,High,High,1,1
+Ovaripada,7,High,61.0,High,High,1,1
+Cuffe Parade,3,High,61.0,High,High,1,1
+Nariman Point,3,High,61.0,High,High,1,1
+Goregaon (W),2A,High,59.6,High,High,1,1
+Eksar,2A,High,58.7,High,High,1,1
+Poisar,7,High,58.4,High,High,1,1
+Vidhan Bhavan,3,High,58.2,High,High,1,1
+Goregaon (E),7,High,58.1,High,High,1,1
+Anand Nagar,2A,High,57.9,High,High,1,1
+Shimpoli,2A,High,57.8,High,High,1,1
+Dahanukarwadi,2A,High,57.3,High,High,1,1
+Oshiwara,2A,High,57.2,High,High,1,1
+Mahalaxmi,3,High,56.8,High,High,1,1
+Jogeshwari (E),7,High,56.5,High,High,1,1
+Akurli,7,High,56.0,High,High,1,1
+Kalbadevi,3,High,55.9,High,High,1,1
+Jagruti Nagar,1,High,55.1,High,High,1,1
+Magathane,7,High,54.7,High,High,1,1
+Valnai-Meeth Chowky,2A,High,54.3,High,High,1,1
+Bangur Nagar,2A,High,54.3,High,High,1,1
+Sitaladevi,3,High,54.0,High,High,1,1
+Dharavi,3,High,53.8,High,High,1,1
+Kandivali (E),7,High,53.4,High,High,1,1
+Acharya Atre Chowk,3,High,52.8,High,High,1,1
+Chakala (JB Nagar),1,High,52.6,High,High,1,1
+Malad (W),2A,High,52.4,High,High,1,1
+Kandarpada,2A,High,52.3,High,High,1,1
+Lower Malad,2A,High,52.0,High,High,1,1
+Siddhivinayak,3,Medium,51.3,Medium,Medium,1,1
+Versova,1,Medium,51.1,Medium,Medium,1,1
+Saki Naka,1,Medium,51.1,Medium,Medium,1,1
+Asalpha,1,Medium,51.0,Medium,Medium,1,1
+WEH,1,Medium,50.9,Medium,Medium,1,1
+Azad Nagar,1,Medium,50.8,Medium,Medium,1,1
+Lower Oshiwara,2A,Medium,50.7,Medium,Medium,1,1
+Girgaon,3,Medium,48.2,Medium,Medium,1,1
+Santacruz,3,Medium,47.5,Medium,Medium,1,1
+Kandivali (W),2A,Medium,45.9,Medium,Medium,1,1
+Borivali (W),2A,Medium,44.5,Medium,Medium,1,1
+Grant Road,3,Medium,44.4,Medium,Medium,1,1
+Borivali (E),7,Medium,43.8,Medium,Medium,1,1
+CSMIA T1,3,Medium,43.2,Medium,Medium,1,1
+Airport Road,1,Medium,40.5,Medium,Medium,1,1
+Sahar Road,3,Medium,40.3,Medium,Medium,1,1
+CSMIA T2,3,Low,37.3,Medium,Medium,0,0

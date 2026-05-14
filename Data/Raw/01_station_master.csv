@@ -1,0 +1,70 @@
+station_name,line,role,is_interchange,interchange_with,is_elevated,pop_density,auto_supply_score,bus_connectivity_score,walk_dist_m
+Dahisar (E),7,terminus_interchange,True,2A,True,0.72,0.55,0.7,420
+Ovaripada,7,remote,False,none,True,0.3,0.2,0.25,680
+Rashtriya Udyan,7,remote,False,none,True,0.25,0.15,0.2,720
+Devipada,7,remote,False,none,True,0.28,0.18,0.22,700
+Borivali (E),7,residential_high,False,none,True,0.8,0.7,0.75,350
+Magathane,7,residential_mid,False,none,True,0.55,0.45,0.5,480
+Poisar,7,residential_mid,False,none,True,0.52,0.42,0.48,510
+Kandivali (E),7,residential_high,False,none,True,0.78,0.65,0.72,380
+Akurli,7,residential_mid,False,none,True,0.5,0.4,0.45,520
+Kurar,7,residential_mid,False,none,True,0.48,0.38,0.43,540
+Dindoshi,7,residential_mid,False,none,True,0.53,0.43,0.5,490
+Goregaon (E),7,residential_high,False,none,True,0.75,0.62,0.68,400
+Jogeshwari (E),7,residential_high,False,none,True,0.7,0.6,0.65,420
+Gundavali,7,interchange,True,1,True,0.65,0.55,0.6,450
+Aarey JVLR,3,remote,False,none,False,0.15,0.1,0.12,980
+SEEPZ,3,office_heavy,False,none,False,0.6,0.3,0.4,550
+MIDC,3,office_heavy,False,none,False,0.58,0.28,0.38,570
+Marol Naka,3,interchange,True,1,False,0.75,0.55,0.65,380
+CSMIA T2,3,airport,False,none,False,0.2,0.8,0.5,300
+Sahar Road,3,airport,False,none,False,0.18,0.75,0.45,320
+CSMIA T1,3,airport,False,none,False,0.2,0.8,0.5,300
+Santacruz,3,residential_high,False,none,False,0.78,0.65,0.7,360
+BKC,3,office_premium,False,none,False,0.85,0.4,0.55,620
+Dharavi,3,residential_high,False,none,False,0.9,0.6,0.65,390
+Sitaladevi,3,residential_mid,False,none,False,0.62,0.5,0.55,470
+Dadar,3,interchange_rail,True,railway,False,0.95,0.7,0.8,310
+Siddhivinayak,3,religious_tourist,False,none,False,0.7,0.65,0.6,400
+Worli,3,office_premium,False,none,False,0.72,0.55,0.6,430
+Acharya Atre Chowk,3,residential_mid,False,none,False,0.65,0.52,0.55,460
+Mahalaxmi,3,office_mid,False,none,False,0.68,0.54,0.58,440
+Mumbai Central,3,interchange_rail,True,railway,False,0.8,0.72,0.78,320
+Grant Road,3,residential_mid,False,none,False,0.7,0.6,0.65,420
+Girgaon,3,residential_mid,False,none,False,0.68,0.58,0.62,440
+Kalbadevi,3,commercial,False,none,False,0.82,0.62,0.7,390
+CSMT,3,interchange_rail,True,railway,False,0.92,0.75,0.85,280
+Hutatma Chowk,3,office_south,False,none,False,0.65,0.55,0.6,450
+Churchgate,3,interchange_rail,True,railway,False,0.8,0.68,0.75,340
+Vidhan Bhavan,3,office_south,False,none,False,0.6,0.5,0.55,480
+Nariman Point,3,office_premium,False,none,False,0.55,0.45,0.48,520
+Cuffe Parade,3,office_south,False,none,False,0.5,0.4,0.44,560
+Dahisar (E) 2A,2A,terminus_interchange,True,7,True,0.72,0.55,0.7,420
+Anand Nagar,2A,residential_mid,False,none,True,0.55,0.45,0.5,490
+Kandarpada,2A,residential_mid,False,none,True,0.52,0.42,0.48,510
+Mandapeshwar,2A,residential_mid,False,none,True,0.5,0.4,0.46,525
+Eksar,2A,residential_mid,False,none,True,0.48,0.38,0.44,540
+Borivali (W),2A,residential_high,False,none,True,0.82,0.72,0.78,340
+Shimpoli,2A,residential_mid,False,none,True,0.55,0.45,0.5,490
+Kandivali (W),2A,residential_high,False,none,True,0.8,0.68,0.74,360
+Dahanukarwadi,2A,residential_mid,False,none,True,0.55,0.44,0.5,495
+Valnai-Meeth Chowky,2A,residential_mid,False,none,True,0.52,0.42,0.47,515
+Malad (W),2A,shopping_hub,False,none,True,0.85,0.7,0.75,350
+Lower Malad,2A,residential_mid,False,none,True,0.6,0.5,0.55,470
+Bangur Nagar,2A,residential_mid,False,none,True,0.58,0.48,0.53,485
+Goregaon (W),2A,shopping_hub,False,none,True,0.8,0.65,0.72,380
+Oshiwara,2A,residential_mid,False,none,True,0.62,0.52,0.57,460
+Lower Oshiwara,2A,residential_mid,False,none,True,0.58,0.48,0.53,485
+DN Nagar,2A,interchange,True,1,True,0.75,0.62,0.68,400
+Versova,1,residential_mid,False,none,True,0.65,0.55,0.6,450
+D.N. Nagar,1,interchange,True,2A,True,0.75,0.62,0.68,400
+Azad Nagar,1,residential_mid,False,none,True,0.6,0.5,0.55,470
+Andheri,1,interchange_rail,True,railway,True,0.95,0.72,0.82,290
+WEH,1,office_mid,False,none,True,0.7,0.58,0.64,430
+Chakala (JB Nagar),1,office_mid,False,none,True,0.68,0.55,0.62,445
+Airport Road,1,airport_adj,False,none,True,0.45,0.7,0.5,380
+Marol Naka L1,1,interchange,True,3,True,0.75,0.55,0.65,380
+Saki Naka,1,residential_mid,False,none,True,0.62,0.52,0.57,460
+Asalpha,1,residential_mid,False,none,True,0.58,0.48,0.53,490
+Jagruti Nagar,1,residential_mid,False,none,True,0.55,0.45,0.5,510
+Ghatkopar,1,interchange_rail,True,railway,True,0.95,0.75,0.85,280

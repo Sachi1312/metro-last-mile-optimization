@@ -1,0 +1,11 @@
+.env
+__pycache__/
+*.pkl
+*.pyc
+
+# Large data files — add to Git LFS or exclude entirely
+Data/Raw/03_hourly_ridership_12mo.csv
+Data/Raw/02_historical_ridership_extended.csv
+
+.ipynb_checkpoints/    # if you'll be using the Jupyter notebooks
+.DS_Store              # if any Mac users are on the team

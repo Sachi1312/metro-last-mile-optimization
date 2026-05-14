@@ -1,0 +1,277 @@
+station_name,line,role,is_interchange,time_window,current_trains_hr,recommended_trains_hr,delta_trains_hr,recommended_headway_min,lmpi_score,severity_label,intervention_impact
+BKC,3,office_premium,0,morning_peak,10.0,12.5,2.5,4.8,81.5,Critical,0.491
+BKC,3,office_premium,0,evening_peak,10.0,12.5,2.5,4.8,81.5,Critical,0.491
+BKC,3,office_premium,0,midday,6.7,7.9,1.2,7.6,81.5,Critical,0.447
+BKC,3,office_premium,0,late_night,5.0,6.2,1.2,9.7,81.5,Critical,0.447
+SEEPZ,3,office_heavy,0,morning_peak,10.0,12.5,2.5,4.8,79.8,Critical,0.482
+SEEPZ,3,office_heavy,0,evening_peak,10.0,12.5,2.5,4.8,79.8,Critical,0.482
+SEEPZ,3,office_heavy,0,midday,6.7,7.9,1.2,7.6,79.8,Critical,0.439
+SEEPZ,3,office_heavy,0,late_night,5.0,6.2,1.2,9.7,79.8,Critical,0.439
+MIDC,3,office_heavy,0,morning_peak,10.0,12.5,2.5,4.8,79.4,Critical,0.48
+MIDC,3,office_heavy,0,evening_peak,10.0,12.5,2.5,4.8,79.4,Critical,0.48
+MIDC,3,office_heavy,0,midday,6.7,7.9,1.2,7.6,79.4,Critical,0.437
+MIDC,3,office_heavy,0,late_night,5.0,6.2,1.2,9.7,79.4,Critical,0.437
+Worli,3,office_premium,0,morning_peak,10.0,12.5,2.5,4.8,70.7,Critical,0.437
+Worli,3,office_premium,0,evening_peak,10.0,12.5,2.5,4.8,70.7,Critical,0.437
+Worli,3,office_premium,0,midday,6.7,7.9,1.2,7.6,70.7,Critical,0.394
+Worli,3,office_premium,0,late_night,5.0,6.2,1.2,9.7,70.7,Critical,0.394
+Gundavali,7,interchange,1,morning_peak,10.9,14.9,4.0,4.0,70.4,Critical,0.485
+Gundavali,7,interchange,1,evening_peak,10.9,14.9,4.0,4.0,70.4,Critical,0.485
+Gundavali,7,interchange,1,midday,6.7,8.7,2.0,6.9,70.4,Critical,0.419
+Gundavali,7,interchange,1,late_night,5.0,7.0,2.0,8.6,70.4,Critical,0.419
+Marol Naka,3,interchange,1,morning_peak,10.0,14.0,4.0,4.3,67.4,Critical,0.47
+Marol Naka,3,interchange,1,evening_peak,10.0,14.0,4.0,4.3,67.4,Critical,0.47
+Marol Naka,3,interchange,1,midday,6.7,8.7,2.0,6.9,67.4,Critical,0.404
+Marol Naka,3,interchange,1,late_night,5.0,7.0,2.0,8.6,67.4,Critical,0.404
+Ghatkopar,1,interchange_rail,1,morning_peak,17.1,20.0,2.9,3.0,67.2,Critical,0.409
+Ghatkopar,1,interchange_rail,1,evening_peak,17.1,20.0,2.9,3.0,67.2,Critical,0.409
+Ghatkopar,1,interchange_rail,1,midday,10.0,12.0,2.0,5.0,67.2,Critical,0.386
+Ghatkopar,1,interchange_rail,1,late_night,6.0,8.0,2.0,7.5,67.2,Critical,0.386
+Dahisar (E),7,terminus_interchange,1,morning_peak,10.9,14.9,4.0,4.0,67.1,Critical,0.469
+Dahisar (E),7,terminus_interchange,1,evening_peak,10.9,14.9,4.0,4.0,67.1,Critical,0.469
+Dahisar (E),7,terminus_interchange,1,midday,6.7,8.7,2.0,6.9,67.1,Critical,0.402
+Dahisar (E),7,terminus_interchange,1,late_night,5.0,7.0,2.0,8.6,67.1,Critical,0.402
+Andheri,1,interchange_rail,1,morning_peak,17.1,20.0,2.9,3.0,66.3,Critical,0.404
+Andheri,1,interchange_rail,1,evening_peak,17.1,20.0,2.9,3.0,66.3,Critical,0.404
+Andheri,1,interchange_rail,1,midday,10.0,12.0,2.0,5.0,66.3,Critical,0.381
+Andheri,1,interchange_rail,1,late_night,6.0,8.0,2.0,7.5,66.3,Critical,0.381
+Marol Naka L1,1,interchange,1,morning_peak,17.1,20.0,2.9,3.0,66.1,Critical,0.403
+Marol Naka L1,1,interchange,1,evening_peak,17.1,20.0,2.9,3.0,66.1,Critical,0.403
+Marol Naka L1,1,interchange,1,midday,10.0,12.0,2.0,5.0,66.1,Critical,0.38
+Marol Naka L1,1,interchange,1,late_night,6.0,8.0,2.0,7.5,66.1,Critical,0.38
+CSMT,3,interchange_rail,1,morning_peak,10.0,14.0,4.0,4.3,65.6,Critical,0.461
+CSMT,3,interchange_rail,1,evening_peak,10.0,14.0,4.0,4.3,65.6,Critical,0.461
+CSMT,3,interchange_rail,1,midday,6.7,8.7,2.0,6.9,65.6,Critical,0.395
+CSMT,3,interchange_rail,1,late_night,5.0,7.0,2.0,8.6,65.6,Critical,0.395
+Dahisar (E) 2A,2A,terminus_interchange,1,morning_peak,10.9,14.9,4.0,4.0,65.5,Critical,0.461
+Dahisar (E) 2A,2A,terminus_interchange,1,evening_peak,10.9,14.9,4.0,4.0,65.5,Critical,0.461
+Dahisar (E) 2A,2A,terminus_interchange,1,midday,7.5,9.5,2.0,6.3,65.5,Critical,0.394
+Dahisar (E) 2A,2A,terminus_interchange,1,late_night,5.0,7.0,2.0,8.6,65.5,Critical,0.394
+Dadar,3,interchange_rail,1,morning_peak,10.0,14.0,4.0,4.3,65.0,Critical,0.458
+Dadar,3,interchange_rail,1,evening_peak,10.0,14.0,4.0,4.3,65.0,Critical,0.458
+Dadar,3,interchange_rail,1,midday,6.7,8.7,2.0,6.9,65.0,Critical,0.392
+Dadar,3,interchange_rail,1,late_night,5.0,7.0,2.0,8.6,65.0,Critical,0.392
+Mumbai Central,3,interchange_rail,1,morning_peak,10.0,14.0,4.0,4.3,64.9,Critical,0.458
+Mumbai Central,3,interchange_rail,1,evening_peak,10.0,14.0,4.0,4.3,64.9,Critical,0.458
+Mumbai Central,3,interchange_rail,1,midday,6.7,8.7,2.0,6.9,64.9,Critical,0.391
+Mumbai Central,3,interchange_rail,1,late_night,5.0,7.0,2.0,8.6,64.9,Critical,0.391
+D.N. Nagar,1,interchange,1,morning_peak,17.1,20.0,2.9,3.0,63.1,High,0.388
+D.N. Nagar,1,interchange,1,evening_peak,17.1,20.0,2.9,3.0,63.1,High,0.388
+D.N. Nagar,1,interchange,1,midday,10.0,11.5,1.5,5.2,63.1,High,0.353
+D.N. Nagar,1,interchange,1,late_night,6.0,7.5,1.5,8.0,63.1,High,0.353
+DN Nagar,2A,interchange,1,morning_peak,10.9,13.9,3.0,4.3,62.6,High,0.413
+DN Nagar,2A,interchange,1,evening_peak,10.9,13.9,3.0,4.3,62.6,High,0.413
+DN Nagar,2A,interchange,1,midday,7.5,9.0,1.5,6.7,62.6,High,0.363
+DN Nagar,2A,interchange,1,late_night,5.0,6.5,1.5,9.2,62.6,High,0.363
+Dindoshi,7,residential_mid,0,morning_peak,10.9,12.4,1.5,4.8,61.6,High,0.358
+Dindoshi,7,residential_mid,0,evening_peak,10.9,12.4,1.5,4.8,61.6,High,0.358
+Dindoshi,7,residential_mid,0,midday,6.7,7.5,0.8,8.0,61.6,High,0.335
+Dindoshi,7,residential_mid,0,late_night,5.0,5.8,0.8,10.3,61.6,High,0.335
+Kurar,7,residential_mid,0,morning_peak,10.9,12.4,1.5,4.8,61.4,High,0.357
+Kurar,7,residential_mid,0,evening_peak,10.9,12.4,1.5,4.8,61.4,High,0.357
+Mandapeshwar,2A,residential_mid,0,morning_peak,10.9,12.4,1.5,4.8,61.4,High,0.357
+Mandapeshwar,2A,residential_mid,0,evening_peak,10.9,12.4,1.5,4.8,61.4,High,0.357
+Kurar,7,residential_mid,0,midday,6.7,7.5,0.8,8.0,61.4,High,0.334
+Kurar,7,residential_mid,0,late_night,5.0,5.8,0.8,10.3,61.4,High,0.334
+Mandapeshwar,2A,residential_mid,0,midday,7.5,8.3,0.8,7.2,61.4,High,0.334
+Mandapeshwar,2A,residential_mid,0,late_night,5.0,5.8,0.8,10.3,61.4,High,0.334
+Churchgate,3,interchange_rail,1,morning_peak,10.0,13.0,3.0,4.6,61.0,High,0.405
+Churchgate,3,interchange_rail,1,evening_peak,10.0,13.0,3.0,4.6,61.0,High,0.405
+Aarey JVLR,3,remote,0,morning_peak,10.0,11.5,1.5,5.2,61.0,High,0.355
+Aarey JVLR,3,remote,0,evening_peak,10.0,11.5,1.5,5.2,61.0,High,0.355
+Devipada,7,remote,0,morning_peak,10.9,12.4,1.5,4.8,61.0,High,0.355
+Devipada,7,remote,0,evening_peak,10.9,12.4,1.5,4.8,61.0,High,0.355
+Churchgate,3,interchange_rail,1,midday,6.7,8.2,1.5,7.3,61.0,High,0.355
+Churchgate,3,interchange_rail,1,late_night,5.0,6.5,1.5,9.2,61.0,High,0.355
+Hutatma Chowk,3,office_south,0,morning_peak,10.0,11.5,1.5,5.2,61.0,High,0.355
+Hutatma Chowk,3,office_south,0,evening_peak,10.0,11.5,1.5,5.2,61.0,High,0.355
+Rashtriya Udyan,7,remote,0,morning_peak,10.9,12.4,1.5,4.8,61.0,High,0.355
+Rashtriya Udyan,7,remote,0,evening_peak,10.9,12.4,1.5,4.8,61.0,High,0.355
+Ovaripada,7,remote,0,morning_peak,10.9,12.4,1.5,4.8,61.0,High,0.355
+Ovaripada,7,remote,0,evening_peak,10.9,12.4,1.5,4.8,61.0,High,0.355
+Cuffe Parade,3,office_south,0,morning_peak,10.0,11.5,1.5,5.2,61.0,High,0.355
+Cuffe Parade,3,office_south,0,evening_peak,10.0,11.5,1.5,5.2,61.0,High,0.355
+Nariman Point,3,office_premium,0,morning_peak,10.0,11.5,1.5,5.2,61.0,High,0.355
+Nariman Point,3,office_premium,0,evening_peak,10.0,11.5,1.5,5.2,61.0,High,0.355
+Aarey JVLR,3,remote,0,midday,6.7,7.5,0.8,8.0,61.0,High,0.332
+Aarey JVLR,3,remote,0,late_night,5.0,5.8,0.8,10.3,61.0,High,0.332
+Devipada,7,remote,0,midday,6.7,7.5,0.8,8.0,61.0,High,0.332
+Devipada,7,remote,0,late_night,5.0,5.8,0.8,10.3,61.0,High,0.332
+Hutatma Chowk,3,office_south,0,midday,6.7,7.5,0.8,8.0,61.0,High,0.332
+Hutatma Chowk,3,office_south,0,late_night,5.0,5.8,0.8,10.3,61.0,High,0.332
+Rashtriya Udyan,7,remote,0,midday,6.7,7.5,0.8,8.0,61.0,High,0.332
+Rashtriya Udyan,7,remote,0,late_night,5.0,5.8,0.8,10.3,61.0,High,0.332
+Ovaripada,7,remote,0,midday,6.7,7.5,0.8,8.0,61.0,High,0.332
+Ovaripada,7,remote,0,late_night,5.0,5.8,0.8,10.3,61.0,High,0.332
+Cuffe Parade,3,office_south,0,midday,6.7,7.5,0.8,8.0,61.0,High,0.332
+Cuffe Parade,3,office_south,0,late_night,5.0,5.8,0.8,10.3,61.0,High,0.332
+Nariman Point,3,office_premium,0,midday,6.7,7.5,0.8,8.0,61.0,High,0.332
+Nariman Point,3,office_premium,0,late_night,5.0,5.8,0.8,10.3,61.0,High,0.332
+Goregaon (W),2A,shopping_hub,0,morning_peak,10.9,12.4,1.5,4.8,59.6,High,0.348
+Goregaon (W),2A,shopping_hub,0,evening_peak,10.9,12.4,1.5,4.8,59.6,High,0.348
+Goregaon (W),2A,shopping_hub,0,midday,7.5,8.3,0.8,7.2,59.6,High,0.325
+Goregaon (W),2A,shopping_hub,0,late_night,5.0,5.8,0.8,10.3,59.6,High,0.325
+Eksar,2A,residential_mid,0,morning_peak,10.9,12.4,1.5,4.8,58.7,High,0.344
+Eksar,2A,residential_mid,0,evening_peak,10.9,12.4,1.5,4.8,58.7,High,0.344
+Eksar,2A,residential_mid,0,midday,7.5,8.3,0.8,7.2,58.7,High,0.32
+Eksar,2A,residential_mid,0,late_night,5.0,5.8,0.8,10.3,58.7,High,0.32
+Poisar,7,residential_mid,0,morning_peak,10.9,12.4,1.5,4.8,58.4,High,0.342
+Poisar,7,residential_mid,0,evening_peak,10.9,12.4,1.5,4.8,58.4,High,0.342
+Poisar,7,residential_mid,0,midday,6.7,7.5,0.8,8.0,58.4,High,0.319
+Poisar,7,residential_mid,0,late_night,5.0,5.8,0.8,10.3,58.4,High,0.319
+Vidhan Bhavan,3,office_south,0,morning_peak,10.0,11.5,1.5,5.2,58.2,High,0.341
+Vidhan Bhavan,3,office_south,0,evening_peak,10.0,11.5,1.5,5.2,58.2,High,0.341
+Vidhan Bhavan,3,office_south,0,midday,6.7,7.5,0.8,8.0,58.2,High,0.318
+Vidhan Bhavan,3,office_south,0,late_night,5.0,5.8,0.8,10.3,58.2,High,0.318
+Goregaon (E),7,residential_high,0,morning_peak,10.9,12.4,1.5,4.8,58.1,High,0.34
+Goregaon (E),7,residential_high,0,evening_peak,10.9,12.4,1.5,4.8,58.1,High,0.34
+Goregaon (E),7,residential_high,0,midday,6.7,7.5,0.8,8.0,58.1,High,0.317
+Goregaon (E),7,residential_high,0,late_night,5.0,5.8,0.8,10.3,58.1,High,0.317
+Anand Nagar,2A,residential_mid,0,morning_peak,10.9,12.4,1.5,4.8,57.9,High,0.339
+Anand Nagar,2A,residential_mid,0,evening_peak,10.9,12.4,1.5,4.8,57.9,High,0.339
+Anand Nagar,2A,residential_mid,0,midday,7.5,8.3,0.8,7.2,57.9,High,0.316
+Anand Nagar,2A,residential_mid,0,late_night,5.0,5.8,0.8,10.3,57.9,High,0.316
+Shimpoli,2A,residential_mid,0,morning_peak,10.9,12.4,1.5,4.8,57.8,High,0.339
+Shimpoli,2A,residential_mid,0,evening_peak,10.9,12.4,1.5,4.8,57.8,High,0.339
+Shimpoli,2A,residential_mid,0,midday,7.5,8.3,0.8,7.2,57.8,High,0.316
+Shimpoli,2A,residential_mid,0,late_night,5.0,5.8,0.8,10.3,57.8,High,0.316
+Dahanukarwadi,2A,residential_mid,0,morning_peak,10.9,12.4,1.5,4.8,57.3,High,0.336
+Dahanukarwadi,2A,residential_mid,0,evening_peak,10.9,12.4,1.5,4.8,57.3,High,0.336
+Dahanukarwadi,2A,residential_mid,0,midday,7.5,8.3,0.8,7.2,57.3,High,0.313
+Dahanukarwadi,2A,residential_mid,0,late_night,5.0,5.8,0.8,10.3,57.3,High,0.313
+Oshiwara,2A,residential_mid,0,morning_peak,10.9,12.4,1.5,4.8,57.2,High,0.336
+Oshiwara,2A,residential_mid,0,evening_peak,10.9,12.4,1.5,4.8,57.2,High,0.336
+Oshiwara,2A,residential_mid,0,midday,7.5,8.3,0.8,7.2,57.2,High,0.313
+Oshiwara,2A,residential_mid,0,late_night,5.0,5.8,0.8,10.3,57.2,High,0.313
+Mahalaxmi,3,office_mid,0,morning_peak,10.0,11.5,1.5,5.2,56.8,High,0.334
+Mahalaxmi,3,office_mid,0,evening_peak,10.0,11.5,1.5,5.2,56.8,High,0.334
+Mahalaxmi,3,office_mid,0,midday,6.7,7.5,0.8,8.0,56.8,High,0.311
+Mahalaxmi,3,office_mid,0,late_night,5.0,5.8,0.8,10.3,56.8,High,0.311
+Jogeshwari (E),7,residential_high,0,morning_peak,10.9,12.4,1.5,4.8,56.5,High,0.332
+Jogeshwari (E),7,residential_high,0,evening_peak,10.9,12.4,1.5,4.8,56.5,High,0.332
+Jogeshwari (E),7,residential_high,0,midday,6.7,7.5,0.8,8.0,56.5,High,0.309
+Jogeshwari (E),7,residential_high,0,late_night,5.0,5.8,0.8,10.3,56.5,High,0.309
+Akurli,7,residential_mid,0,morning_peak,10.9,12.4,1.5,4.8,56.0,High,0.33
+Akurli,7,residential_mid,0,evening_peak,10.9,12.4,1.5,4.8,56.0,High,0.33
+Akurli,7,residential_mid,0,midday,6.7,7.5,0.8,8.0,56.0,High,0.307
+Akurli,7,residential_mid,0,late_night,5.0,5.8,0.8,10.3,56.0,High,0.307
+Kalbadevi,3,commercial,0,morning_peak,10.0,11.5,1.5,5.2,55.9,High,0.329
+Kalbadevi,3,commercial,0,evening_peak,10.0,11.5,1.5,5.2,55.9,High,0.329
+Kalbadevi,3,commercial,0,midday,6.7,7.5,0.8,8.0,55.9,High,0.306
+Kalbadevi,3,commercial,0,late_night,5.0,5.8,0.8,10.3,55.9,High,0.306
+Jagruti Nagar,1,residential_mid,0,morning_peak,17.1,18.6,1.5,3.2,55.1,High,0.313
+Jagruti Nagar,1,residential_mid,0,evening_peak,17.1,18.6,1.5,3.2,55.1,High,0.313
+Jagruti Nagar,1,residential_mid,0,midday,10.0,10.8,0.8,5.6,55.1,High,0.296
+Jagruti Nagar,1,residential_mid,0,late_night,6.0,6.8,0.8,8.8,55.1,High,0.296
+Magathane,7,residential_mid,0,morning_peak,10.9,12.4,1.5,4.8,54.7,High,0.324
+Magathane,7,residential_mid,0,evening_peak,10.9,12.4,1.5,4.8,54.7,High,0.324
+Magathane,7,residential_mid,0,midday,6.7,7.5,0.8,8.0,54.7,High,0.3
+Magathane,7,residential_mid,0,late_night,5.0,5.8,0.8,10.3,54.7,High,0.3
+Valnai-Meeth Chowky,2A,residential_mid,0,morning_peak,10.9,12.4,1.5,4.8,54.3,High,0.321
+Valnai-Meeth Chowky,2A,residential_mid,0,evening_peak,10.9,12.4,1.5,4.8,54.3,High,0.321
+Bangur Nagar,2A,residential_mid,0,morning_peak,10.9,12.4,1.5,4.8,54.3,High,0.321
+Bangur Nagar,2A,residential_mid,0,evening_peak,10.9,12.4,1.5,4.8,54.3,High,0.321
+Valnai-Meeth Chowky,2A,residential_mid,0,midday,7.5,8.3,0.8,7.2,54.3,High,0.298
+Valnai-Meeth Chowky,2A,residential_mid,0,late_night,5.0,5.8,0.8,10.3,54.3,High,0.298
+Bangur Nagar,2A,residential_mid,0,midday,7.5,8.3,0.8,7.2,54.3,High,0.298
+Bangur Nagar,2A,residential_mid,0,late_night,5.0,5.8,0.8,10.3,54.3,High,0.298
+Sitaladevi,3,residential_mid,0,morning_peak,10.0,11.5,1.5,5.2,54.0,High,0.32
+Sitaladevi,3,residential_mid,0,evening_peak,10.0,11.5,1.5,5.2,54.0,High,0.32
+Sitaladevi,3,residential_mid,0,midday,6.7,7.5,0.8,8.0,54.0,High,0.297
+Sitaladevi,3,residential_mid,0,late_night,5.0,5.8,0.8,10.3,54.0,High,0.297
+Dharavi,3,residential_high,0,morning_peak,10.0,11.5,1.5,5.2,53.8,High,0.319
+Dharavi,3,residential_high,0,evening_peak,10.0,11.5,1.5,5.2,53.8,High,0.319
+Dharavi,3,residential_high,0,midday,6.7,7.5,0.8,8.0,53.8,High,0.296
+Dharavi,3,residential_high,0,late_night,5.0,5.8,0.8,10.3,53.8,High,0.296
+Kandivali (E),7,residential_high,0,morning_peak,10.9,12.4,1.5,4.8,53.4,High,0.317
+Kandivali (E),7,residential_high,0,evening_peak,10.9,12.4,1.5,4.8,53.4,High,0.317
+Kandivali (E),7,residential_high,0,midday,6.7,7.5,0.8,8.0,53.4,High,0.294
+Kandivali (E),7,residential_high,0,late_night,5.0,5.8,0.8,10.3,53.4,High,0.294
+Acharya Atre Chowk,3,residential_mid,0,morning_peak,10.0,11.5,1.5,5.2,52.8,High,0.314
+Acharya Atre Chowk,3,residential_mid,0,evening_peak,10.0,11.5,1.5,5.2,52.8,High,0.314
+Acharya Atre Chowk,3,residential_mid,0,midday,6.7,7.5,0.8,8.0,52.8,High,0.291
+Acharya Atre Chowk,3,residential_mid,0,late_night,5.0,5.8,0.8,10.3,52.8,High,0.291
+Chakala (JB Nagar),1,office_mid,0,morning_peak,17.1,18.6,1.5,3.2,52.6,High,0.3
+Chakala (JB Nagar),1,office_mid,0,evening_peak,17.1,18.6,1.5,3.2,52.6,High,0.3
+Chakala (JB Nagar),1,office_mid,0,midday,10.0,10.8,0.8,5.6,52.6,High,0.283
+Chakala (JB Nagar),1,office_mid,0,late_night,6.0,6.8,0.8,8.8,52.6,High,0.283
+Malad (W),2A,shopping_hub,0,morning_peak,10.9,12.4,1.5,4.8,52.4,High,0.312
+Malad (W),2A,shopping_hub,0,evening_peak,10.9,12.4,1.5,4.8,52.4,High,0.312
+Malad (W),2A,shopping_hub,0,midday,7.5,8.3,0.8,7.2,52.4,High,0.289
+Malad (W),2A,shopping_hub,0,late_night,5.0,5.8,0.8,10.3,52.4,High,0.289
+Kandarpada,2A,residential_mid,0,morning_peak,10.9,12.4,1.5,4.8,52.3,High,0.311
+Kandarpada,2A,residential_mid,0,evening_peak,10.9,12.4,1.5,4.8,52.3,High,0.311
+Kandarpada,2A,residential_mid,0,midday,7.5,8.3,0.8,7.2,52.3,High,0.288
+Kandarpada,2A,residential_mid,0,late_night,5.0,5.8,0.8,10.3,52.3,High,0.288
+Lower Malad,2A,residential_mid,0,morning_peak,10.9,12.4,1.5,4.8,52.0,High,0.31
+Lower Malad,2A,residential_mid,0,evening_peak,10.9,12.4,1.5,4.8,52.0,High,0.31
+Lower Malad,2A,residential_mid,0,midday,7.5,8.3,0.8,7.2,52.0,High,0.287
+Lower Malad,2A,residential_mid,0,late_night,5.0,5.8,0.8,10.3,52.0,High,0.287
+Siddhivinayak,3,religious_tourist,0,morning_peak,10.0,10.5,0.5,5.7,51.3,Medium,0.273
+Siddhivinayak,3,religious_tourist,0,evening_peak,10.0,10.5,0.5,5.7,51.3,Medium,0.273
+Siddhivinayak,3,religious_tourist,0,midday,6.7,6.9,0.2,8.7,51.3,Medium,0.263
+Siddhivinayak,3,religious_tourist,0,late_night,5.0,5.2,0.2,11.5,51.3,Medium,0.263
+Versova,1,residential_mid,0,morning_peak,17.1,17.6,0.5,3.4,51.1,Medium,0.268
+Versova,1,residential_mid,0,evening_peak,17.1,17.6,0.5,3.4,51.1,Medium,0.268
+Saki Naka,1,residential_mid,0,morning_peak,17.1,17.6,0.5,3.4,51.1,Medium,0.268
+Saki Naka,1,residential_mid,0,evening_peak,17.1,17.6,0.5,3.4,51.1,Medium,0.268
+Versova,1,residential_mid,0,midday,10.0,10.2,0.2,5.9,51.1,Medium,0.261
+Versova,1,residential_mid,0,late_night,6.0,6.2,0.2,9.7,51.1,Medium,0.261
+Saki Naka,1,residential_mid,0,midday,10.0,10.2,0.2,5.9,51.1,Medium,0.261
+Saki Naka,1,residential_mid,0,late_night,6.0,6.2,0.2,9.7,51.1,Medium,0.261
+Asalpha,1,residential_mid,0,morning_peak,17.1,17.6,0.5,3.4,51.0,Medium,0.268
+Asalpha,1,residential_mid,0,evening_peak,17.1,17.6,0.5,3.4,51.0,Medium,0.268
+Asalpha,1,residential_mid,0,midday,10.0,10.2,0.2,5.9,51.0,Medium,0.26
+Asalpha,1,residential_mid,0,late_night,6.0,6.2,0.2,9.7,51.0,Medium,0.26
+WEH,1,office_mid,0,morning_peak,17.1,17.6,0.5,3.4,50.9,Medium,0.267
+WEH,1,office_mid,0,evening_peak,17.1,17.6,0.5,3.4,50.9,Medium,0.267
+WEH,1,office_mid,0,midday,10.0,10.2,0.2,5.9,50.9,Medium,0.26
+WEH,1,office_mid,0,late_night,6.0,6.2,0.2,9.7,50.9,Medium,0.26
+Azad Nagar,1,residential_mid,0,morning_peak,17.1,17.6,0.5,3.4,50.8,Medium,0.267
+Azad Nagar,1,residential_mid,0,evening_peak,17.1,17.6,0.5,3.4,50.8,Medium,0.267
+Azad Nagar,1,residential_mid,0,midday,10.0,10.2,0.2,5.9,50.8,Medium,0.259
+Azad Nagar,1,residential_mid,0,late_night,6.0,6.2,0.2,9.7,50.8,Medium,0.259
+Lower Oshiwara,2A,residential_mid,0,morning_peak,10.9,11.4,0.5,5.3,50.7,Medium,0.27
+Lower Oshiwara,2A,residential_mid,0,evening_peak,10.9,11.4,0.5,5.3,50.7,Medium,0.27
+Lower Oshiwara,2A,residential_mid,0,midday,7.5,7.7,0.2,7.8,50.7,Medium,0.26
+Lower Oshiwara,2A,residential_mid,0,late_night,5.0,5.2,0.2,11.5,50.7,Medium,0.26
+Girgaon,3,residential_mid,0,morning_peak,10.0,10.5,0.5,5.7,48.2,Medium,0.258
+Girgaon,3,residential_mid,0,evening_peak,10.0,10.5,0.5,5.7,48.2,Medium,0.258
+Girgaon,3,residential_mid,0,midday,6.7,6.9,0.2,8.7,48.2,Medium,0.248
+Girgaon,3,residential_mid,0,late_night,5.0,5.2,0.2,11.5,48.2,Medium,0.248
+Santacruz,3,residential_high,0,morning_peak,10.0,10.5,0.5,5.7,47.5,Medium,0.254
+Santacruz,3,residential_high,0,evening_peak,10.0,10.5,0.5,5.7,47.5,Medium,0.254
+Santacruz,3,residential_high,0,midday,6.7,6.9,0.2,8.7,47.5,Medium,0.244
+Santacruz,3,residential_high,0,late_night,5.0,5.2,0.2,11.5,47.5,Medium,0.244
+Kandivali (W),2A,residential_high,0,morning_peak,10.9,11.4,0.5,5.3,45.9,Medium,0.246
+Kandivali (W),2A,residential_high,0,evening_peak,10.9,11.4,0.5,5.3,45.9,Medium,0.246
+Kandivali (W),2A,residential_high,0,midday,7.5,7.7,0.2,7.8,45.9,Medium,0.236
+Kandivali (W),2A,residential_high,0,late_night,5.0,5.2,0.2,11.5,45.9,Medium,0.236
+Borivali (W),2A,residential_high,0,morning_peak,10.9,11.4,0.5,5.3,44.5,Medium,0.239
+Borivali (W),2A,residential_high,0,evening_peak,10.9,11.4,0.5,5.3,44.5,Medium,0.239
+Borivali (W),2A,residential_high,0,midday,7.5,7.7,0.2,7.8,44.5,Medium,0.229
+Borivali (W),2A,residential_high,0,late_night,5.0,5.2,0.2,11.5,44.5,Medium,0.229
+Grant Road,3,residential_mid,0,morning_peak,10.0,10.5,0.5,5.7,44.4,Medium,0.239
+Grant Road,3,residential_mid,0,evening_peak,10.0,10.5,0.5,5.7,44.4,Medium,0.239
+Grant Road,3,residential_mid,0,midday,6.7,6.9,0.2,8.7,44.4,Medium,0.229
+Grant Road,3,residential_mid,0,late_night,5.0,5.2,0.2,11.5,44.4,Medium,0.229
+Borivali (E),7,residential_high,0,morning_peak,10.9,11.4,0.5,5.3,43.8,Medium,0.236
+Borivali (E),7,residential_high,0,evening_peak,10.9,11.4,0.5,5.3,43.8,Medium,0.236
+Borivali (E),7,residential_high,0,midday,6.7,6.9,0.2,8.7,43.8,Medium,0.226
+Borivali (E),7,residential_high,0,late_night,5.0,5.2,0.2,11.5,43.8,Medium,0.226
+CSMIA T1,3,airport,0,morning_peak,10.0,10.5,0.5,5.7,43.2,Medium,0.233
+CSMIA T1,3,airport,0,evening_peak,10.0,10.5,0.5,5.7,43.2,Medium,0.233
+CSMIA T1,3,airport,0,midday,6.7,6.9,0.2,8.7,43.2,Medium,0.223
+CSMIA T1,3,airport,0,late_night,5.0,5.2,0.2,11.5,43.2,Medium,0.223
+Airport Road,1,airport_adj,0,morning_peak,17.1,17.6,0.5,3.4,40.5,Medium,0.215
+Airport Road,1,airport_adj,0,evening_peak,17.1,17.6,0.5,3.4,40.5,Medium,0.215
+Airport Road,1,airport_adj,0,midday,10.0,10.2,0.2,5.9,40.5,Medium,0.208
+Airport Road,1,airport_adj,0,late_night,6.0,6.2,0.2,9.7,40.5,Medium,0.208
+Sahar Road,3,airport,0,morning_peak,10.0,10.5,0.5,5.7,40.3,Medium,0.218
+Sahar Road,3,airport,0,evening_peak,10.0,10.5,0.5,5.7,40.3,Medium,0.218
+Sahar Road,3,airport,0,midday,6.7,6.9,0.2,8.7,40.3,Medium,0.208
+Sahar Road,3,airport,0,late_night,5.0,5.2,0.2,11.5,40.3,Medium,0.208
+CSMIA T2,3,airport,0,morning_peak,10.0,10.0,0.0,6.0,37.3,Low,0.186
+CSMIA T2,3,airport,0,evening_peak,10.0,10.0,0.0,6.0,37.3,Low,0.186
+CSMIA T2,3,airport,0,midday,6.7,6.7,0.0,9.0,37.3,Low,0.186
+CSMIA T2,3,airport,0,late_night,5.0,5.0,0.0,12.0,37.3,Low,0.186
