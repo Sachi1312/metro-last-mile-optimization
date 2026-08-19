@@ -293,6 +293,20 @@ report_xgb = classification_report(y_enc, xgb.predict(X),
 pd.DataFrame(report_rf).T.to_csv(os.path.join(RESULTS, "layer1_rf_report.csv"))
 pd.DataFrame(report_xgb).T.to_csv(os.path.join(RESULTS, "layer1_xgb_report.csv"))
 
+# Save fold-wise CV accuracy (for dashboard — previously computed but not persisted)
+fold_rows = []
+for fold_i in range(5):
+    fold_rows.append({"model": "XGBoost", "fold": fold_i + 1, "accuracy": round(float(xgb_cv["test_accuracy"][fold_i]) * 100, 1)})
+    fold_rows.append({"model": "Random Forest", "fold": fold_i + 1, "accuracy": round(float(rf_cv["test_accuracy"][fold_i]) * 100, 1)})
+pd.DataFrame(fold_rows).to_csv(os.path.join(RESULTS, "layer1_fold_accuracy.csv"), index=False)
+
+# Save feature importances (for dashboard — previously only plotted, not persisted)
+imp_rows = []
+for feat in FEATURE_COLS:
+    imp_rows.append({"model": "XGBoost", "feature": feat, "importance": round(float(xgb_imp[feat]), 4)})
+    imp_rows.append({"model": "Random Forest", "feature": feat, "importance": round(float(feat_imp[feat]), 4)})
+pd.DataFrame(imp_rows).to_csv(os.path.join(RESULTS, "layer1_feature_importance.csv"), index=False)
+
 # ── Final summary ─────────────────────────────────────────────
 print("\n" + "=" * 55)
 print("  LAYER 1 COMPLETE")
@@ -311,7 +325,9 @@ print(f"  ├── Models/rf_classifier.pkl")
 print(f"  ├── Models/xgb_classifier.pkl")
 print(f"  ├── Outputs/Results/layer1_predictions.csv")
 print(f"  ├── Outputs/Results/layer1_rf_report.csv")
-print(f"  └── Outputs/Results/layer1_xgb_report.csv")
+print(f"  ├── Outputs/Results/layer1_xgb_report.csv")
+print(f"  ├── Outputs/Results/layer1_fold_accuracy.csv")
+print(f"  └── Outputs/Results/layer1_feature_importance.csv")
 print(f"\n  Plots saved (11–15):")
 print(f"  ├── 11_model_accuracy.png")
 print(f"  ├── 12_confusion_matrix.png")

@@ -1,0 +1,2 @@
+model,mae,mape,r2,test_rows
+Seasonal Naive (same day last week),1088.7,14.61,0.9378,6473

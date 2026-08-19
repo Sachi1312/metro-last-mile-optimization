@@ -417,6 +417,215 @@ def get_line_stations(line: str):
     }
 
 # ══════════════════════════════════════════════════════════════
+# HISTORICAL RIDERSHIP (2019-2025) — day-level, with festival/monsoon flags
+# ══════════════════════════════════════════════════════════════
+@app.get("/historical/{station_name}")
+def get_historical(station_name: str, year: int = None, month: int = None):
+    """
+    Historical ridership for a station, including festival and monsoon context.
+    Defaults to the most recent available month if year/month are not given.
+    Optional filters: ?year=2024&month=8
+    """
+    docs = list(db["historical_ridership"].find(
+        {"station_name": station_name}, {"_id": 0}
+    ).sort("date", 1))
+
+    if not docs:
+        raise HTTPException(status_code=404,
+                            detail=f"No historical data for '{station_name}'")
+
+    for d in docs:
+        if isinstance(d.get("date"), datetime):
+            d["date"] = d["date"].strftime("%Y-%m-%d")
+
+    from collections import defaultdict
+    monthly_agg = defaultdict(list)
+    for d in docs:
+        monthly_agg[d["date"][:7]].append(d["footfall"])
+    available_months = sorted(monthly_agg.keys())
+    monthly_avg = [
+        {"period": k, "avg_footfall": round(sum(v) / len(v))}
+        for k, v in sorted(monthly_agg.items())
+    ]
+
+    if not year or not month:
+        latest = available_months[-1]
+        year, month = int(latest[:4]), int(latest[5:7])
+
+    prefix = f"{year:04d}-{month:02d}"
+    daily = [d for d in docs if d["date"].startswith(prefix)]
+
+    festival_docs = [d for d in docs if d.get("is_festival")]
+    festival_docs.sort(key=lambda d: d.get("festival_boost", 0), reverse=True)
+    top_festivals = festival_docs[:8]
+
+    monsoon_docs = [d for d in docs if d.get("rain_intensity") not in (None, "none")]
+    monsoon_docs.sort(key=lambda d: d.get("rain_boost", 0), reverse=True)
+    top_monsoon_days = monsoon_docs[:8]
+
+    return {
+        "station_name":      station_name,
+        "available_months":  available_months,
+        "selected_year":     year,
+        "selected_month":    month,
+        "daily":             daily,
+        "monthly_avg":       monthly_avg,
+        "top_festivals":     top_festivals,
+        "top_monsoon_days":  top_monsoon_days,
+    }
+
+# ══════════════════════════════════════════════════════════════
+# CLASSIFICATION DETAILS — real per-fold CV accuracy + feature importance
+# ══════════════════════════════════════════════════════════════
+@app.get("/classification/details")
+def get_classification_details():
+    """Real 5-fold CV accuracy and feature importances from Layer 1 training."""
+    fold_docs = clean_many(db["results_layer1_fold_accuracy"].find({}, {"_id": 0}))
+    imp_docs  = clean_many(db["results_layer1_feature_importance"].find({}, {"_id": 0}))
+
+    from collections import defaultdict
+    fold_accuracy = defaultdict(list)
+    for d in fold_docs:
+        fold_accuracy[d["model"]].append({"fold": d["fold"], "accuracy": d["accuracy"]})
+    for model in fold_accuracy:
+        fold_accuracy[model].sort(key=lambda x: x["fold"])
+
+    feature_importance = defaultdict(list)
+    for d in imp_docs:
+        feature_importance[d["model"]].append({"feature": d["feature"], "importance": d["importance"]})
+    for model in feature_importance:
+        feature_importance[model].sort(key=lambda x: x["importance"], reverse=True)
+
+    return {
+        "fold_accuracy":      dict(fold_accuracy),
+        "feature_importance": dict(feature_importance),
+    }
+
+# ══════════════════════════════════════════════════════════════
+# MODEL COMPARISON — classification (XGB vs RF vs LogReg) and
+# forecasting (XGBoost vs Prophet vs seasonal-naive baseline)
+# ══════════════════════════════════════════════════════════════
+@app.get("/models/comparison")
+def get_model_comparison():
+    """Real evaluation metrics for every model trained/evaluated in this project."""
+    from collections import defaultdict
+
+    cls_summary = clean_many(db["results_model_comparison_classification"].find({}, {"_id": 0}))
+
+    fold_docs = clean_many(db["results_model_comparison_classification_folds"].find({}, {"_id": 0}))
+    cls_folds = defaultdict(list)
+    for d in fold_docs:
+        cls_folds[d["model"]].append({"fold": d["fold"], "accuracy": d["accuracy"]})
+    for model in cls_folds:
+        cls_folds[model].sort(key=lambda x: x["fold"])
+
+    xgb_class_report = clean_many(db["results_layer1_xgb_class_report"].find({}, {"_id": 0}))
+    rf_class_report  = clean_many(db["results_layer1_rf_class_report"].find({}, {"_id": 0}))
+
+    forecast_summary = clean_many(db["results_model_comparison_forecasting"].find({}, {"_id": 0}))
+
+    return {
+        "classification": {
+            "summary":       cls_summary,
+            "fold_accuracy": dict(cls_folds),
+            "class_reports": {
+                "XGBoost":       xgb_class_report,
+                "Random Forest": rf_class_report,
+            },
+        },
+        "forecasting": {
+            "summary": forecast_summary,
+        },
+    }
+
+# ══════════════════════════════════════════════════════════════
+# FESTIVAL IMPACT — network-wide footfall boost per festival,
+# to guide resource reallocation on festival days
+# ══════════════════════════════════════════════════════════════
+@app.get("/festivals")
+def get_festivals():
+    """List of festivals present in the historical ridership data."""
+    names = db["historical_ridership"].distinct("festival_name", {"is_festival": 1})
+    names = sorted(n for n in names if n and n != "none")
+    return {"festivals": names}
+
+@app.get("/festivals/{festival_name}")
+def get_festival_impact(festival_name: str):
+    """
+    Per-station festival-day footfall vs. that same station's own normal-day baseline,
+    ranked by absolute extra riders. The dataset's festival_boost multiplier is applied
+    near-uniformly network-wide (~same % for every station), so ranking by percent alone
+    doesn't differentiate stations — ranking by absolute extra riders does, since baseline
+    footfall varies hugely by station and that's what actually drives capacity needs.
+    """
+    festival_docs = list(db["historical_ridership"].find(
+        {"festival_name": festival_name, "is_festival": 1},
+        {"_id": 0, "station_name": 1, "line": 1, "footfall": 1, "festival_boost": 1}
+    ))
+    if not festival_docs:
+        raise HTTPException(status_code=404, detail=f"No data for festival '{festival_name}'")
+
+    from collections import defaultdict
+    festival_by_station = defaultdict(list)
+    for d in festival_docs:
+        festival_by_station[d["station_name"]].append(d)
+
+    baseline_pipeline = [
+        {"$match": {"is_festival": 0}},
+        {"$group": {"_id": "$station_name", "avg_footfall": {"$avg": "$footfall"}}},
+    ]
+    baseline_map = {
+        d["_id"]: d["avg_footfall"]
+        for d in db["historical_ridership"].aggregate(baseline_pipeline)
+    }
+
+    freq_map = {
+        d["station_name"]: d
+        for d in db["results_frequency"].find({"time_window": "morning_peak"}, {"_id": 0})
+    }
+    lmpi_map = {d["station_name"]: d for d in db["lmpi_scores"].find({}, {"_id": 0})}
+
+    stations = []
+    for name, rows in festival_by_station.items():
+        avg_boost = sum(r.get("festival_boost", 0) for r in rows) / len(rows)
+        avg_festival_footfall = sum(r.get("footfall", 0) for r in rows) / len(rows)
+        baseline_footfall = baseline_map.get(name, avg_festival_footfall)
+        extra_riders = avg_festival_footfall - baseline_footfall
+
+        freq = freq_map.get(name, {})
+        lmpi = lmpi_map.get(name, {})
+        current_trains = freq.get("current_trains_hr")
+        # Scale the frequency suggestion by this station's own relative demand increase,
+        # not the flat network-wide festival_boost, so it reflects real per-station load.
+        relative_increase = (extra_riders / baseline_footfall) if baseline_footfall else 0
+        suggested_shift = round(current_trains * relative_increase, 1) if current_trains else None
+
+        stations.append({
+            "station_name":       name,
+            "line":               rows[0].get("line"),
+            "severity_label":     lmpi.get("severity_label"),
+            "avg_festival_boost": round(avg_boost, 3),
+            "avg_footfall":       round(avg_festival_footfall),
+            "baseline_footfall":  round(baseline_footfall),
+            "extra_riders":       round(extra_riders),
+            "current_trains_hr":  current_trains,
+            "suggested_extra_trains_hr": suggested_shift,
+        })
+
+    stations.sort(key=lambda s: s["extra_riders"], reverse=True)
+    n = len(stations)
+    surge = [s for s in stations if s["extra_riders"] > 0][: max(1, n // 4)]
+    quiet = sorted([s for s in stations if s["extra_riders"] <= 0], key=lambda s: s["extra_riders"])[: max(1, n // 4)]
+
+    return {
+        "festival":        festival_name,
+        "station_count":   n,
+        "stations":        stations,
+        "surge_stations":  surge,
+        "quiet_stations":  quiet,
+    }
+
+# ══════════════════════════════════════════════════════════════
 # RUN SERVER
 # ══════════════════════════════════════════════════════════════
 if __name__ == "__main__":

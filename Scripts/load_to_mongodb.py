@@ -190,6 +190,34 @@ results = [
     (os.path.join(RESULTS, "layer4_interchange_sync.csv"),
      "results_interchange_sync",
      ["station","line_a","line_b","time_window","event_type"]),
+
+    (os.path.join(RESULTS, "layer1_fold_accuracy.csv"),
+     "results_layer1_fold_accuracy",
+     ["model","fold"]),
+
+    (os.path.join(RESULTS, "layer1_feature_importance.csv"),
+     "results_layer1_feature_importance",
+     ["model","feature"]),
+
+    (os.path.join(RESULTS, "layer1_xgb_class_report_clean.csv"),
+     "results_layer1_xgb_class_report",
+     ["class_label"]),
+
+    (os.path.join(RESULTS, "layer1_rf_class_report_clean.csv"),
+     "results_layer1_rf_class_report",
+     ["class_label"]),
+
+    (os.path.join(RESULTS, "model_comparison_classification.csv"),
+     "results_model_comparison_classification",
+     ["model"]),
+
+    (os.path.join(RESULTS, "model_comparison_classification_folds.csv"),
+     "results_model_comparison_classification_folds",
+     ["model","fold"]),
+
+    (os.path.join(RESULTS, "model_comparison_forecasting.csv"),
+     "results_model_comparison_forecasting",
+     ["model"]),
 ]
 
 for filepath, collection, indexes in results:

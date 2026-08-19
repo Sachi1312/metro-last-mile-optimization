@@ -218,6 +218,40 @@ python Scripts/update_monthly.py   # ~3.8 min retrain
 
 ---
 
+## Running with Docker
+
+The Backend (FastAPI) and Frontend (React dashboard) are containerized so the app can be
+demoed with one command, without installing Node or Python locally. The ML pipeline
+(Scripts/, Models/) is not containerized — those run once, ahead of time, on the host, and
+their output already lives in MongoDB Atlas by the time you run the containers.
+
+### Prerequisites
+- Docker Desktop
+- A populated MongoDB Atlas database (i.e. `Scripts/load_to_mongodb.py` has already been run)
+- `.env` in the project root with `MONGO_URI` and `DB_NAME` (same file the scripts use)
+
+### Run
+
+```bash
+docker compose up --build
+```
+
+- Backend: http://localhost:8420
+- Frontend: http://localhost:5420
+
+(Ports are non-default — `8420`/`5420` instead of `8000`/`5173` — to avoid clashing with other
+local projects. Change them in `docker-compose.yml` and `Frontend/src/api.js`'s `API_BASE` if you
+need different ports.)
+
+`docker compose down` stops both containers. Rebuild after changing backend/frontend code with
+`docker compose up -d --build` again — Docker caches unchanged layers so rebuilds are fast.
+
+The backend image only installs `fastapi`, `uvicorn`, `pymongo`, and `python-dotenv`
+(`Backend/requirements.txt`) — not the full ML stack in the root `requirements.txt`, since the
+API only reads pre-computed results from MongoDB and never re-runs the models.
+
+---
+
 ## Data Notes
 
 - Historical ridership calibrated to MMRDA totals

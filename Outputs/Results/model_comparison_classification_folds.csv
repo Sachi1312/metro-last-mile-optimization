@@ -1,0 +1,16 @@
+model,fold,accuracy
+XGBoost,1,100.0
+Random Forest,1,92.9
+XGBoost,2,92.9
+Random Forest,2,92.9
+XGBoost,3,92.9
+Random Forest,3,92.9
+XGBoost,4,100.0
+Random Forest,4,100.0
+XGBoost,5,92.3
+Random Forest,5,92.3
+Logistic Regression,1,100.0
+Logistic Regression,2,92.9
+Logistic Regression,3,92.9
+Logistic Regression,4,92.9
+Logistic Regression,5,92.3

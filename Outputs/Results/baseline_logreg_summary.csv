@@ -1,0 +1,2 @@
+model,test_accuracy_pct,f1_weighted_pct
+Logistic Regression,94.2,94.3

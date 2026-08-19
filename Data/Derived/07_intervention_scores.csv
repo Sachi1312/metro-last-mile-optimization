@@ -58,22 +58,22 @@ Mumbai Central,3,interchange_rail,1,64.9,Critical,Real-time auto/cab availabilit
 D.N. Nagar,1,interchange,1,63.1,High,Auto aggregator partnership (Ola/Uber/Rapido),0.775,Medium,auto_problem_score,Auto Rickshaw,7.3,7.75
 D.N. Nagar,1,interchange,1,63.1,High,Covered walkway to nearest bus stop,0.729,Medium,walking_problem_score,Auto Rickshaw,18.5,3.941
 D.N. Nagar,1,interchange,1,63.1,High,Increase off-peak train frequency,0.716,Medium,crowding_score,Auto Rickshaw,0.0,9.99
-D.N. Nagar,1,interchange,1,63.1,High,Cycle docking station at exit,0.689,Medium,walking_problem_score,Auto Rickshaw,8.1,6.89
+D.N. Nagar,1,interchange,1,63.1,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.689,Medium,walking_problem_score,Auto Rickshaw,8.1,6.89
 DN Nagar,2A,interchange,1,62.6,High,Auto aggregator partnership (Ola/Uber/Rapido),0.753,Medium,auto_problem_score,Auto Rickshaw,6.2,7.53
 DN Nagar,2A,interchange,1,62.6,High,Covered walkway to nearest bus stop,0.728,Medium,walking_problem_score,Auto Rickshaw,16.8,4.333
 DN Nagar,2A,interchange,1,62.6,High,Increase off-peak train frequency,0.719,Medium,crowding_score,Auto Rickshaw,0.0,9.99
-DN Nagar,2A,interchange,1,62.6,High,Cycle docking station at exit,0.68,Medium,walking_problem_score,Auto Rickshaw,14.2,4.789
+DN Nagar,2A,interchange,1,62.6,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.68,Medium,walking_problem_score,Auto Rickshaw,14.2,4.789
 Dindoshi,7,residential_mid,0,61.6,High,Auto aggregator partnership (Ola/Uber/Rapido),0.705,Medium,auto_problem_score,Shared Auto,14.6,4.829
 Dindoshi,7,residential_mid,0,61.6,High,Covered walkway to nearest bus stop,0.646,Medium,walking_problem_score,Shared Auto,15.0,4.307
 Dindoshi,7,residential_mid,0,61.6,High,Increase off-peak train frequency,0.612,Medium,crowding_score,Shared Auto,0.0,9.99
-Dindoshi,7,residential_mid,0,61.6,High,Cycle docking station at exit,0.552,Medium,walking_problem_score,Shared Auto,11.4,4.842
+Dindoshi,7,residential_mid,0,61.6,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.552,Medium,walking_problem_score,Shared Auto,11.4,4.842
 Mandapeshwar,2A,residential_mid,0,61.4,High,Auto aggregator partnership (Ola/Uber/Rapido),0.728,Medium,auto_problem_score,E-Rickshaw,7.4,7.28
 Kurar,7,residential_mid,0,61.4,High,Covered walkway to nearest bus stop,0.709,Medium,walking_problem_score,Shared Auto,15.6,4.545
 Kurar,7,residential_mid,0,61.4,High,Auto aggregator partnership (Ola/Uber/Rapido),0.703,Medium,auto_problem_score,Shared Auto,5.5,7.03
 Mandapeshwar,2A,residential_mid,0,61.4,High,Covered walkway to nearest bus stop,0.67,Medium,walking_problem_score,E-Rickshaw,24.6,2.724
-Mandapeshwar,2A,residential_mid,0,61.4,High,Cycle docking station at exit,0.639,Medium,walking_problem_score,E-Rickshaw,15.6,4.096
+Mandapeshwar,2A,residential_mid,0,61.4,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.639,Medium,walking_problem_score,E-Rickshaw,15.6,4.096
 Kurar,7,residential_mid,0,61.4,High,Increase off-peak train frequency,0.619,Medium,crowding_score,Shared Auto,0.0,9.99
-Kurar,7,residential_mid,0,61.4,High,Cycle docking station at exit,0.595,Medium,walking_problem_score,Shared Auto,9.7,5.95
+Kurar,7,residential_mid,0,61.4,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.595,Medium,walking_problem_score,Shared Auto,9.7,5.95
 Mandapeshwar,2A,residential_mid,0,61.4,High,Increase off-peak train frequency,0.578,Medium,crowding_score,E-Rickshaw,0.0,9.99
 Churchgate,3,interchange_rail,1,61.0,High,Auto aggregator partnership (Ola/Uber/Rapido),0.848,Medium,auto_problem_score,BEST Bus,13.2,6.424
 Nariman Point,3,office_premium,0,61.0,High,Auto aggregator partnership (Ola/Uber/Rapido),0.787,Medium,auto_problem_score,E-Rickshaw,13.9,5.662
@@ -86,127 +86,127 @@ Nariman Point,3,office_premium,0,61.0,High,Increase off-peak train frequency,0.7
 Ovaripada,7,remote,0,61.0,High,Auto aggregator partnership (Ola/Uber/Rapido),0.723,Medium,auto_problem_score,E-Rickshaw,11.5,6.287
 Hutatma Chowk,3,office_south,0,61.0,High,Covered walkway to nearest bus stop,0.715,Medium,walking_problem_score,Shared Auto,17.0,4.206
 Cuffe Parade,3,office_south,0,61.0,High,Covered walkway to nearest bus stop,0.711,Medium,walking_problem_score,E-Rickshaw,21.4,3.322
-Nariman Point,3,office_premium,0,61.0,High,Cycle docking station at exit,0.68,Medium,walking_problem_score,E-Rickshaw,14.9,4.564
+Nariman Point,3,office_premium,0,61.0,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.68,Medium,walking_problem_score,E-Rickshaw,14.9,4.564
 Hutatma Chowk,3,office_south,0,61.0,High,Increase off-peak train frequency,0.672,Medium,crowding_score,Shared Auto,0.0,9.99
-Churchgate,3,interchange_rail,1,61.0,High,Cycle docking station at exit,0.669,Medium,walking_problem_score,BEST Bus,9.1,6.69
+Churchgate,3,interchange_rail,1,61.0,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.669,Medium,walking_problem_score,BEST Bus,9.1,6.69
 Devipada,7,remote,0,61.0,High,Covered walkway to nearest bus stop,0.664,Medium,walking_problem_score,E-Rickshaw,12.8,5.188
 Rashtriya Udyan,7,remote,0,61.0,High,Auto aggregator partnership (Ola/Uber/Rapido),0.66,Medium,auto_problem_score,E-Rickshaw,6.6,6.6
-Hutatma Chowk,3,office_south,0,61.0,High,Cycle docking station at exit,0.657,Medium,walking_problem_score,Shared Auto,18.6,3.532
+Hutatma Chowk,3,office_south,0,61.0,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.657,Medium,walking_problem_score,Shared Auto,18.6,3.532
 Devipada,7,remote,0,61.0,High,Auto aggregator partnership (Ola/Uber/Rapido),0.654,Medium,auto_problem_score,E-Rickshaw,14.4,4.542
 Aarey JVLR,3,remote,0,61.0,High,Auto aggregator partnership (Ola/Uber/Rapido),0.652,Medium,auto_problem_score,E-Rickshaw,5.4,6.52
-Cuffe Parade,3,office_south,0,61.0,High,Cycle docking station at exit,0.643,Medium,walking_problem_score,E-Rickshaw,11.2,5.741
+Cuffe Parade,3,office_south,0,61.0,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.643,Medium,walking_problem_score,E-Rickshaw,11.2,5.741
 Cuffe Parade,3,office_south,0,61.0,High,Increase off-peak train frequency,0.643,Medium,crowding_score,E-Rickshaw,0.0,9.99
 Ovaripada,7,remote,0,61.0,High,Covered walkway to nearest bus stop,0.639,Medium,walking_problem_score,E-Rickshaw,14.5,4.407
 Rashtriya Udyan,7,remote,0,61.0,High,Covered walkway to nearest bus stop,0.636,Medium,walking_problem_score,E-Rickshaw,28.0,2.271
 Aarey JVLR,3,remote,0,61.0,High,Covered walkway to nearest bus stop,0.62,Medium,walking_problem_score,E-Rickshaw,21.8,2.844
 Ovaripada,7,remote,0,61.0,High,Increase off-peak train frequency,0.6,Medium,crowding_score,E-Rickshaw,0.0,9.99
-Rashtriya Udyan,7,remote,0,61.0,High,Cycle docking station at exit,0.592,Medium,walking_problem_score,E-Rickshaw,8.1,5.92
+Rashtriya Udyan,7,remote,0,61.0,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.592,Medium,walking_problem_score,E-Rickshaw,8.1,5.92
 Aarey JVLR,3,remote,0,61.0,High,Increase off-peak train frequency,0.577,Medium,crowding_score,E-Rickshaw,0.0,9.99
 Devipada,7,remote,0,61.0,High,Increase off-peak train frequency,0.572,Medium,crowding_score,E-Rickshaw,0.0,9.99
 Rashtriya Udyan,7,remote,0,61.0,High,Increase off-peak train frequency,0.561,Medium,crowding_score,E-Rickshaw,0.0,9.99
-Devipada,7,remote,0,61.0,High,Cycle docking station at exit,0.56,Medium,walking_problem_score,E-Rickshaw,19.1,2.932
-Ovaripada,7,remote,0,61.0,High,Cycle docking station at exit,0.558,Medium,walking_problem_score,E-Rickshaw,11.9,4.689
-Aarey JVLR,3,remote,0,61.0,High,Cycle docking station at exit,0.55,Medium,walking_problem_score,E-Rickshaw,15.7,3.503
+Devipada,7,remote,0,61.0,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.56,Medium,walking_problem_score,E-Rickshaw,19.1,2.932
+Ovaripada,7,remote,0,61.0,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.558,Medium,walking_problem_score,E-Rickshaw,11.9,4.689
+Aarey JVLR,3,remote,0,61.0,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.55,Medium,walking_problem_score,E-Rickshaw,15.7,3.503
 Goregaon (W),2A,shopping_hub,0,59.6,High,Auto aggregator partnership (Ola/Uber/Rapido),0.769,Medium,auto_problem_score,Auto Rickshaw,7.8,7.69
 Goregaon (W),2A,shopping_hub,0,59.6,High,Increase off-peak train frequency,0.691,Medium,crowding_score,Auto Rickshaw,0.0,9.99
 Goregaon (W),2A,shopping_hub,0,59.6,High,Covered walkway to nearest bus stop,0.687,Medium,walking_problem_score,Auto Rickshaw,10.5,6.543
-Goregaon (W),2A,shopping_hub,0,59.6,High,Cycle docking station at exit,0.629,Medium,walking_problem_score,Auto Rickshaw,19.3,3.259
+Goregaon (W),2A,shopping_hub,0,59.6,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.629,Medium,walking_problem_score,Auto Rickshaw,19.3,3.259
 Eksar,2A,residential_mid,0,58.7,High,Auto aggregator partnership (Ola/Uber/Rapido),0.689,Medium,auto_problem_score,Auto Rickshaw,5.2,6.89
 Eksar,2A,residential_mid,0,58.7,High,Covered walkway to nearest bus stop,0.667,Medium,walking_problem_score,Auto Rickshaw,28.6,2.332
-Eksar,2A,residential_mid,0,58.7,High,Cycle docking station at exit,0.614,Medium,walking_problem_score,Auto Rickshaw,19.6,3.133
+Eksar,2A,residential_mid,0,58.7,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.614,Medium,walking_problem_score,Auto Rickshaw,19.6,3.133
 Eksar,2A,residential_mid,0,58.7,High,Increase off-peak train frequency,0.609,Medium,crowding_score,Auto Rickshaw,0.0,9.99
 Poisar,7,residential_mid,0,58.4,High,Auto aggregator partnership (Ola/Uber/Rapido),0.68,Medium,auto_problem_score,Shared Auto,13.5,5.037
 Poisar,7,residential_mid,0,58.4,High,Covered walkway to nearest bus stop,0.605,Medium,walking_problem_score,Shared Auto,16.3,3.712
-Poisar,7,residential_mid,0,58.4,High,Cycle docking station at exit,0.6,Medium,walking_problem_score,Shared Auto,19.2,3.125
+Poisar,7,residential_mid,0,58.4,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.6,Medium,walking_problem_score,Shared Auto,19.2,3.125
 Poisar,7,residential_mid,0,58.4,High,Increase off-peak train frequency,0.582,Medium,crowding_score,Shared Auto,0.0,9.99
 Vidhan Bhavan,3,office_south,0,58.2,High,Auto aggregator partnership (Ola/Uber/Rapido),0.73,Medium,auto_problem_score,Shared Auto,11.2,6.518
 Vidhan Bhavan,3,office_south,0,58.2,High,Covered walkway to nearest bus stop,0.7,Medium,walking_problem_score,Shared Auto,29.8,2.349
-Vidhan Bhavan,3,office_south,0,58.2,High,Cycle docking station at exit,0.646,Medium,walking_problem_score,Shared Auto,18.5,3.492
+Vidhan Bhavan,3,office_south,0,58.2,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.646,Medium,walking_problem_score,Shared Auto,18.5,3.492
 Vidhan Bhavan,3,office_south,0,58.2,High,Increase off-peak train frequency,0.636,Medium,crowding_score,Shared Auto,0.0,9.99
 Goregaon (E),7,residential_high,0,58.1,High,Auto aggregator partnership (Ola/Uber/Rapido),0.75,Medium,auto_problem_score,Auto Rickshaw,8.6,7.5
 Goregaon (E),7,residential_high,0,58.1,High,Covered walkway to nearest bus stop,0.702,Medium,walking_problem_score,Auto Rickshaw,15.9,4.415
 Goregaon (E),7,residential_high,0,58.1,High,Increase off-peak train frequency,0.661,Medium,crowding_score,Auto Rickshaw,0.0,9.99
-Goregaon (E),7,residential_high,0,58.1,High,Cycle docking station at exit,0.639,Medium,walking_problem_score,Auto Rickshaw,18.4,3.473
+Goregaon (E),7,residential_high,0,58.1,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.639,Medium,walking_problem_score,Auto Rickshaw,18.4,3.473
 Anand Nagar,2A,residential_mid,0,57.9,High,Covered walkway to nearest bus stop,0.745,Medium,walking_problem_score,E-Rickshaw,23.0,3.239
 Anand Nagar,2A,residential_mid,0,57.9,High,Auto aggregator partnership (Ola/Uber/Rapido),0.712,Medium,auto_problem_score,E-Rickshaw,13.0,5.477
 Anand Nagar,2A,residential_mid,0,57.9,High,Increase off-peak train frequency,0.628,Medium,crowding_score,E-Rickshaw,0.0,9.99
-Anand Nagar,2A,residential_mid,0,57.9,High,Cycle docking station at exit,0.625,Medium,walking_problem_score,E-Rickshaw,18.7,3.342
+Anand Nagar,2A,residential_mid,0,57.9,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.625,Medium,walking_problem_score,E-Rickshaw,18.7,3.342
 Shimpoli,2A,residential_mid,0,57.8,High,Auto aggregator partnership (Ola/Uber/Rapido),0.675,Medium,auto_problem_score,Auto Rickshaw,10.8,6.25
-Shimpoli,2A,residential_mid,0,57.8,High,Cycle docking station at exit,0.656,Medium,walking_problem_score,Auto Rickshaw,11.4,5.754
+Shimpoli,2A,residential_mid,0,57.8,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.656,Medium,walking_problem_score,Auto Rickshaw,11.4,5.754
 Shimpoli,2A,residential_mid,0,57.8,High,Covered walkway to nearest bus stop,0.64,Medium,walking_problem_score,Auto Rickshaw,10.7,5.981
 Shimpoli,2A,residential_mid,0,57.8,High,Increase off-peak train frequency,0.565,Medium,crowding_score,Auto Rickshaw,0.0,9.99
 Dahanukarwadi,2A,residential_mid,0,57.3,High,Auto aggregator partnership (Ola/Uber/Rapido),0.687,Medium,auto_problem_score,Shared Auto,6.3,6.87
 Dahanukarwadi,2A,residential_mid,0,57.3,High,Covered walkway to nearest bus stop,0.674,Medium,walking_problem_score,Shared Auto,20.4,3.304
 Dahanukarwadi,2A,residential_mid,0,57.3,High,Increase off-peak train frequency,0.63,Medium,crowding_score,Shared Auto,0.0,9.99
-Dahanukarwadi,2A,residential_mid,0,57.3,High,Cycle docking station at exit,0.581,Medium,walking_problem_score,Shared Auto,15.5,3.748
+Dahanukarwadi,2A,residential_mid,0,57.3,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.581,Medium,walking_problem_score,Shared Auto,15.5,3.748
 Oshiwara,2A,residential_mid,0,57.2,High,Auto aggregator partnership (Ola/Uber/Rapido),0.698,Medium,auto_problem_score,Shared Auto,10.4,6.712
 Oshiwara,2A,residential_mid,0,57.2,High,Covered walkway to nearest bus stop,0.625,Medium,walking_problem_score,Shared Auto,22.7,2.753
 Oshiwara,2A,residential_mid,0,57.2,High,Increase off-peak train frequency,0.618,Medium,crowding_score,Shared Auto,0.0,9.99
-Oshiwara,2A,residential_mid,0,57.2,High,Cycle docking station at exit,0.543,Medium,walking_problem_score,Shared Auto,17.5,3.103
+Oshiwara,2A,residential_mid,0,57.2,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.543,Medium,walking_problem_score,Shared Auto,17.5,3.103
 Mahalaxmi,3,office_mid,0,56.8,High,Auto aggregator partnership (Ola/Uber/Rapido),0.708,Medium,auto_problem_score,Auto Rickshaw,5.3,7.08
 Mahalaxmi,3,office_mid,0,56.8,High,Covered walkway to nearest bus stop,0.671,Medium,walking_problem_score,Auto Rickshaw,29.3,2.29
 Mahalaxmi,3,office_mid,0,56.8,High,Increase off-peak train frequency,0.668,Medium,crowding_score,Auto Rickshaw,0.0,9.99
-Mahalaxmi,3,office_mid,0,56.8,High,Cycle docking station at exit,0.637,Medium,walking_problem_score,Auto Rickshaw,12.9,4.938
+Mahalaxmi,3,office_mid,0,56.8,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.637,Medium,walking_problem_score,Auto Rickshaw,12.9,4.938
 Jogeshwari (E),7,residential_high,0,56.5,High,Auto aggregator partnership (Ola/Uber/Rapido),0.712,Medium,auto_problem_score,Auto Rickshaw,10.5,6.781
 Jogeshwari (E),7,residential_high,0,56.5,High,Increase off-peak train frequency,0.67,Medium,crowding_score,Auto Rickshaw,0.0,9.99
 Jogeshwari (E),7,residential_high,0,56.5,High,Covered walkway to nearest bus stop,0.659,Medium,walking_problem_score,Auto Rickshaw,24.3,2.712
-Jogeshwari (E),7,residential_high,0,56.5,High,Cycle docking station at exit,0.593,Medium,walking_problem_score,Auto Rickshaw,19.5,3.041
+Jogeshwari (E),7,residential_high,0,56.5,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.593,Medium,walking_problem_score,Auto Rickshaw,19.5,3.041
 Akurli,7,residential_mid,0,56.0,High,Auto aggregator partnership (Ola/Uber/Rapido),0.75,Medium,auto_problem_score,E-Rickshaw,9.2,7.5
 Akurli,7,residential_mid,0,56.0,High,Covered walkway to nearest bus stop,0.675,Medium,walking_problem_score,E-Rickshaw,15.0,4.5
-Akurli,7,residential_mid,0,56.0,High,Cycle docking station at exit,0.634,Medium,walking_problem_score,E-Rickshaw,8.2,6.34
+Akurli,7,residential_mid,0,56.0,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.634,Medium,walking_problem_score,E-Rickshaw,8.2,6.34
 Akurli,7,residential_mid,0,56.0,High,Increase off-peak train frequency,0.592,Medium,crowding_score,E-Rickshaw,0.0,9.99
 Kalbadevi,3,commercial,0,55.9,High,Auto aggregator partnership (Ola/Uber/Rapido),0.735,Medium,auto_problem_score,Auto Rickshaw,9.7,7.35
 Kalbadevi,3,commercial,0,55.9,High,Covered walkway to nearest bus stop,0.687,Medium,walking_problem_score,Auto Rickshaw,12.0,5.725
 Kalbadevi,3,commercial,0,55.9,High,Increase off-peak train frequency,0.623,Medium,crowding_score,Auto Rickshaw,0.0,9.99
-Kalbadevi,3,commercial,0,55.9,High,Cycle docking station at exit,0.537,Medium,walking_problem_score,Auto Rickshaw,10.1,5.317
+Kalbadevi,3,commercial,0,55.9,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.537,Medium,walking_problem_score,Auto Rickshaw,10.1,5.317
 Jagruti Nagar,1,residential_mid,0,55.1,High,Auto aggregator partnership (Ola/Uber/Rapido),0.742,Medium,auto_problem_score,Shared Auto,11.4,6.509
-Jagruti Nagar,1,residential_mid,0,55.1,High,Cycle docking station at exit,0.633,Medium,walking_problem_score,Shared Auto,14.0,4.521
+Jagruti Nagar,1,residential_mid,0,55.1,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.633,Medium,walking_problem_score,Shared Auto,14.0,4.521
 Jagruti Nagar,1,residential_mid,0,55.1,High,Covered walkway to nearest bus stop,0.609,Medium,walking_problem_score,Shared Auto,10.9,5.587
 Jagruti Nagar,1,residential_mid,0,55.1,High,Increase off-peak train frequency,0.576,Medium,crowding_score,Shared Auto,0.0,9.99
 Magathane,7,residential_mid,0,54.7,High,Auto aggregator partnership (Ola/Uber/Rapido),0.672,Medium,auto_problem_score,Shared Auto,5.7,6.72
 Magathane,7,residential_mid,0,54.7,High,Covered walkway to nearest bus stop,0.657,Medium,walking_problem_score,Shared Auto,22.8,2.882
 Magathane,7,residential_mid,0,54.7,High,Increase off-peak train frequency,0.603,Medium,crowding_score,Shared Auto,0.0,9.99
-Magathane,7,residential_mid,0,54.7,High,Cycle docking station at exit,0.6,Medium,walking_problem_score,Shared Auto,19.3,3.109
+Magathane,7,residential_mid,0,54.7,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.6,Medium,walking_problem_score,Shared Auto,19.3,3.109
 Valnai-Meeth Chowky,2A,residential_mid,0,54.3,High,Auto aggregator partnership (Ola/Uber/Rapido),0.736,Medium,auto_problem_score,Shared Auto,9.6,7.36
 Bangur Nagar,2A,residential_mid,0,54.3,High,Auto aggregator partnership (Ola/Uber/Rapido),0.704,Medium,auto_problem_score,Shared Auto,5.7,7.04
 Bangur Nagar,2A,residential_mid,0,54.3,High,Increase off-peak train frequency,0.634,Medium,crowding_score,Shared Auto,0.0,9.99
 Valnai-Meeth Chowky,2A,residential_mid,0,54.3,High,Increase off-peak train frequency,0.629,Medium,crowding_score,Shared Auto,0.0,9.99
 Bangur Nagar,2A,residential_mid,0,54.3,High,Covered walkway to nearest bus stop,0.628,Medium,walking_problem_score,Shared Auto,16.4,3.829
 Valnai-Meeth Chowky,2A,residential_mid,0,54.3,High,Covered walkway to nearest bus stop,0.615,Medium,walking_problem_score,Shared Auto,20.9,2.943
-Valnai-Meeth Chowky,2A,residential_mid,0,54.3,High,Cycle docking station at exit,0.594,Medium,walking_problem_score,Shared Auto,19.5,3.046
-Bangur Nagar,2A,residential_mid,0,54.3,High,Cycle docking station at exit,0.581,Medium,walking_problem_score,Shared Auto,9.4,5.81
+Valnai-Meeth Chowky,2A,residential_mid,0,54.3,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.594,Medium,walking_problem_score,Shared Auto,19.5,3.046
+Bangur Nagar,2A,residential_mid,0,54.3,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.581,Medium,walking_problem_score,Shared Auto,9.4,5.81
 Sitaladevi,3,residential_mid,0,54.0,High,Auto aggregator partnership (Ola/Uber/Rapido),0.714,Medium,auto_problem_score,Auto Rickshaw,12.4,5.758
 Sitaladevi,3,residential_mid,0,54.0,High,Covered walkway to nearest bus stop,0.652,Medium,walking_problem_score,Auto Rickshaw,26.1,2.498
 Sitaladevi,3,residential_mid,0,54.0,High,Increase off-peak train frequency,0.599,Medium,crowding_score,Auto Rickshaw,0.0,9.99
-Sitaladevi,3,residential_mid,0,54.0,High,Cycle docking station at exit,0.576,Medium,walking_problem_score,Auto Rickshaw,17.0,3.388
+Sitaladevi,3,residential_mid,0,54.0,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.576,Medium,walking_problem_score,Auto Rickshaw,17.0,3.388
 Dharavi,3,residential_high,0,53.8,High,Auto aggregator partnership (Ola/Uber/Rapido),0.721,Medium,auto_problem_score,Auto Rickshaw,8.7,7.21
 Dharavi,3,residential_high,0,53.8,High,Covered walkway to nearest bus stop,0.674,Medium,walking_problem_score,Auto Rickshaw,25.5,2.643
 Dharavi,3,residential_high,0,53.8,High,Increase off-peak train frequency,0.644,Medium,crowding_score,Auto Rickshaw,0.0,9.99
-Dharavi,3,residential_high,0,53.8,High,Cycle docking station at exit,0.635,Medium,walking_problem_score,Auto Rickshaw,18.3,3.47
+Dharavi,3,residential_high,0,53.8,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.635,Medium,walking_problem_score,Auto Rickshaw,18.3,3.47
 Kandivali (E),7,residential_high,0,53.4,High,Auto aggregator partnership (Ola/Uber/Rapido),0.743,Medium,auto_problem_score,Auto Rickshaw,6.0,7.43
 Kandivali (E),7,residential_high,0,53.4,High,Covered walkway to nearest bus stop,0.693,Medium,walking_problem_score,Auto Rickshaw,28.1,2.466
-Kandivali (E),7,residential_high,0,53.4,High,Cycle docking station at exit,0.655,Medium,walking_problem_score,Auto Rickshaw,11.8,5.551
+Kandivali (E),7,residential_high,0,53.4,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.655,Medium,walking_problem_score,Auto Rickshaw,11.8,5.551
 Kandivali (E),7,residential_high,0,53.4,High,Increase off-peak train frequency,0.648,Medium,crowding_score,Auto Rickshaw,0.0,9.99
 Acharya Atre Chowk,3,residential_mid,0,52.8,High,Auto aggregator partnership (Ola/Uber/Rapido),0.704,Medium,auto_problem_score,Shared Auto,14.5,4.855
 Acharya Atre Chowk,3,residential_mid,0,52.8,High,Increase off-peak train frequency,0.665,Medium,crowding_score,Shared Auto,0.0,9.99
 Acharya Atre Chowk,3,residential_mid,0,52.8,High,Covered walkway to nearest bus stop,0.641,Medium,walking_problem_score,Shared Auto,21.5,2.981
-Acharya Atre Chowk,3,residential_mid,0,52.8,High,Cycle docking station at exit,0.577,Medium,walking_problem_score,Shared Auto,11.5,5.017
+Acharya Atre Chowk,3,residential_mid,0,52.8,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.577,Medium,walking_problem_score,Shared Auto,11.5,5.017
 Chakala (JB Nagar),1,office_mid,0,52.6,High,Auto aggregator partnership (Ola/Uber/Rapido),0.752,Medium,auto_problem_score,Auto Rickshaw,12.9,5.829
 Chakala (JB Nagar),1,office_mid,0,52.6,High,Covered walkway to nearest bus stop,0.698,Medium,walking_problem_score,Auto Rickshaw,25.8,2.705
-Chakala (JB Nagar),1,office_mid,0,52.6,High,Cycle docking station at exit,0.628,Medium,walking_problem_score,Auto Rickshaw,8.7,6.28
+Chakala (JB Nagar),1,office_mid,0,52.6,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.628,Medium,walking_problem_score,Auto Rickshaw,8.7,6.28
 Chakala (JB Nagar),1,office_mid,0,52.6,High,Increase off-peak train frequency,0.624,Medium,crowding_score,Auto Rickshaw,0.0,9.99
 Malad (W),2A,shopping_hub,0,52.4,High,Auto aggregator partnership (Ola/Uber/Rapido),0.772,Medium,auto_problem_score,Auto Rickshaw,8.5,7.72
 Malad (W),2A,shopping_hub,0,52.4,High,Covered walkway to nearest bus stop,0.699,Medium,walking_problem_score,Auto Rickshaw,12.3,5.683
 Malad (W),2A,shopping_hub,0,52.4,High,Increase off-peak train frequency,0.666,Medium,crowding_score,Auto Rickshaw,0.0,9.99
-Malad (W),2A,shopping_hub,0,52.4,High,Cycle docking station at exit,0.66,Medium,walking_problem_score,Auto Rickshaw,15.4,4.286
+Malad (W),2A,shopping_hub,0,52.4,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.66,Medium,walking_problem_score,Auto Rickshaw,15.4,4.286
 Kandarpada,2A,residential_mid,0,52.3,High,Auto aggregator partnership (Ola/Uber/Rapido),0.702,Medium,auto_problem_score,Shared Auto,5.7,7.02
 Kandarpada,2A,residential_mid,0,52.3,High,Covered walkway to nearest bus stop,0.634,Medium,walking_problem_score,Shared Auto,26.4,2.402
 Kandarpada,2A,residential_mid,0,52.3,High,Increase off-peak train frequency,0.616,Medium,crowding_score,Shared Auto,0.0,9.99
-Kandarpada,2A,residential_mid,0,52.3,High,Cycle docking station at exit,0.587,Medium,walking_problem_score,Shared Auto,9.0,5.87
+Kandarpada,2A,residential_mid,0,52.3,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.587,Medium,walking_problem_score,Shared Auto,9.0,5.87
 Lower Malad,2A,residential_mid,0,52.0,High,Auto aggregator partnership (Ola/Uber/Rapido),0.66,Medium,auto_problem_score,E-Rickshaw,13.1,5.038
 Lower Malad,2A,residential_mid,0,52.0,High,Covered walkway to nearest bus stop,0.613,Medium,walking_problem_score,E-Rickshaw,28.9,2.121
 Lower Malad,2A,residential_mid,0,52.0,High,Increase off-peak train frequency,0.607,Medium,crowding_score,E-Rickshaw,0.0,9.99
-Lower Malad,2A,residential_mid,0,52.0,High,Cycle docking station at exit,0.583,Medium,walking_problem_score,E-Rickshaw,17.3,3.37
+Lower Malad,2A,residential_mid,0,52.0,High,Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks,0.583,Medium,walking_problem_score,E-Rickshaw,17.3,3.37
 Siddhivinayak,3,religious_tourist,0,51.3,Medium,Digital wayfinding + multilingual signage,0.544,Low,walking_problem_score,Auto Rickshaw,3.8,5.44
 Siddhivinayak,3,religious_tourist,0,51.3,Medium,Auto stand regularization + price board,0.543,Low,auto_problem_score,Auto Rickshaw,1.2,5.43
 Siddhivinayak,3,religious_tourist,0,51.3,Medium,Shelter + seating at pickup/drop zone,0.495,Low,safety_score,Auto Rickshaw,5.0,4.95

@@ -1,0 +1,4 @@
+model,cv_accuracy_pct,f1_weighted_pct,note
+Logistic Regression,94.2,94.3,F1 averaged across CV folds
+Random Forest,94.2,100.0,In-sample F1 (full-fit report); accuracy above is held-out CV
+XGBoost,95.6,100.0,In-sample F1 (full-fit report); accuracy above is held-out CV

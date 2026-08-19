@@ -1,0 +1,6 @@
+model,fold,accuracy
+Logistic Regression,1,100.0
+Logistic Regression,2,92.9
+Logistic Regression,3,92.9
+Logistic Regression,4,92.9
+Logistic Regression,5,92.3

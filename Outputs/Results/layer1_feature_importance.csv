@@ -1,0 +1,65 @@
+model,feature,importance
+XGBoost,auto_problem_score,0.0364
+Random Forest,auto_problem_score,0.0246
+XGBoost,walking_problem_score,0.0098
+Random Forest,walking_problem_score,0.012
+XGBoost,bus_problem_score,0.0412
+Random Forest,bus_problem_score,0.0221
+XGBoost,crowding_score,0.0254
+Random Forest,crowding_score,0.0339
+XGBoost,safety_score,0.0101
+Random Forest,safety_score,0.0201
+XGBoost,pop_density,0.0093
+Random Forest,pop_density,0.0132
+XGBoost,auto_supply_score,0.0211
+Random Forest,auto_supply_score,0.0159
+XGBoost,bus_connectivity_score,0.0025
+Random Forest,bus_connectivity_score,0.0087
+XGBoost,walk_dist_m,0.0082
+Random Forest,walk_dist_m,0.0143
+XGBoost,is_interchange,0.2295
+Random Forest,is_interchange,0.0418
+XGBoost,is_elevated,0.0076
+Random Forest,is_elevated,0.0013
+XGBoost,role_encoded,0.0216
+Random Forest,role_encoded,0.035
+XGBoost,survey_satisfaction,0.0143
+Random Forest,survey_satisfaction,0.0076
+XGBoost,survey_auto_avail,0.0054
+Random Forest,survey_auto_avail,0.019
+XGBoost,survey_bus_freq,0.0018
+Random Forest,survey_bus_freq,0.0087
+XGBoost,survey_safety,0.0063
+Random Forest,survey_safety,0.0177
+XGBoost,survey_walkability,0.0082
+Random Forest,survey_walkability,0.0063
+XGBoost,auto_walk_combined,0.0312
+Random Forest,auto_walk_combined,0.015
+XGBoost,transit_gap_score,0.0069
+Random Forest,transit_gap_score,0.0195
+XGBoost,interchange_pressure,0.0416
+Random Forest,interchange_pressure,0.0395
+XGBoost,dissatisfaction_idx,0.062
+Random Forest,dissatisfaction_idx,0.0265
+XGBoost,infra_gap,0.0105
+Random Forest,infra_gap,0.0251
+XGBoost,population_pressure,0.0097
+Random Forest,population_pressure,0.0343
+XGBoost,lmpi_rank_in_line,0.0233
+Random Forest,lmpi_rank_in_line,0.0735
+XGBoost,is_critical_auto,0.0
+Random Forest,is_critical_auto,0.0027
+XGBoost,is_critical_walk,0.0
+Random Forest,is_critical_walk,0.0
+XGBoost,is_critical_bus,0.0
+Random Forest,is_critical_bus,0.0007
+XGBoost,is_high_population,0.0
+Random Forest,is_high_population,0.0101
+XGBoost,is_multi_problem,0.0
+Random Forest,is_multi_problem,0.0006
+XGBoost,rec_trains_peak,0.0479
+Random Forest,rec_trains_peak,0.0974
+XGBoost,freq_gap_ratio,0.1741
+Random Forest,freq_gap_ratio,0.2034
+XGBoost,num_interventions,0.1341
+Random Forest,num_interventions,0.1494

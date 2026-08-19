@@ -82,7 +82,7 @@ INTERVENTIONS = {
             "addresses":   "walking_problem_score",
         },
         {
-            "action":      "Cycle docking station at exit",
+            "action":      "Campus shuttle bus within MIDC estate — 3 stops covering all major office blocks",
             "base_impact": 0.60,
             "priority":    "Medium",
             "cost_min":    8, "cost_max": 20,
