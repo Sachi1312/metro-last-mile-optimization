@@ -52,7 +52,7 @@ export default function FestivalImpact() {
     <div>
       <PageHeader
         title="Festival Impact"
-        subtitle="Which stations surge and which stay quiet on a given festival — so resources shift there instead of sitting idle elsewhere"
+        subtitle="Which stations see the biggest festival-day surge and which see the least — so spare trains, autos, and buses shift to where demand actually is"
         right={
           festivals && (
             <select
@@ -82,30 +82,51 @@ export default function FestivalImpact() {
         <Loading label={`Loading ${selected || "festival"} impact`} />
       ) : (
         <>
+          {impact.caveat && (
+            <div
+              style={{
+                padding: "12px 16px",
+                background: "#FFF8E8",
+                border: "1px solid #EF9F27",
+                borderRadius: 8,
+                fontSize: 12,
+                color: "var(--text-primary)",
+                lineHeight: 1.6,
+                marginBottom: 20,
+              }}
+            >
+              <strong>Data limitation:</strong> {impact.caveat}
+            </div>
+          )}
+
           <Card style={{ padding: 20, marginBottom: 20 }}>
             <h3 style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>
               Extra Riders by Station — {impact.festival}
             </h3>
             <p style={{ fontSize: 11.5, color: "var(--text-secondary)", marginBottom: 16 }}>
-              All {impact.station_count} stations, ranked by extra riders vs. each station's own normal-day average.
-              (The dataset's festival multiplier is close to uniform network-wide — ranking by that percentage alone
-              wouldn't separate stations meaningfully, so this ranks by absolute rider increase, which does.)
+              All {impact.station_count} stations, ranked by extra riders vs. each station's own normal-day average
+              (network average: +{impact.network_avg_extra_riders?.toLocaleString()} riders).
             </p>
             <RankedChart stations={impact.stations} />
           </Card>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))", gap: 20 }}>
             <StationGroup
-              title="Surge Stations — Shift Resources Here"
+              title="Highest Surge — Shift Resources Here"
               subtitle="Largest absolute increase in riders — deploy extra trains, autos, and staff here on this festival"
               stations={impact.surge_stations}
               tone="surge"
+              networkAvg={impact.network_avg_extra_riders}
+              topExtra={impact.stations[0]?.extra_riders}
             />
             <StationGroup
-              title="Quiet Stations — Safe to Reduce"
-              subtitle="Flat or below-baseline riders on this festival — frequency can be trimmed without impact"
+              title="Lowest Surge — Divert Resources From Here"
+              subtitle="Smallest increase in riders relative to the rest of the network — safe to trim frequency here and route that capacity to the surge stations instead"
               stations={impact.quiet_stations}
               tone="quiet"
+              networkAvg={impact.network_avg_extra_riders}
+              topExtra={impact.stations[0]?.extra_riders}
+              topStationName={impact.stations[0]?.station_name}
             />
           </div>
         </>
@@ -163,54 +184,68 @@ function RankedChart({ stations }) {
   );
 }
 
-function StationGroup({ title, subtitle, stations, tone }) {
+function StationGroup({ title, subtitle, stations, tone, networkAvg, topExtra, topStationName }) {
   const accent = tone === "surge" ? "var(--critical)" : "var(--low)";
   return (
     <Card style={{ padding: 20 }}>
       <h3 style={{ fontSize: 14, fontWeight: 700, marginBottom: 4, color: accent }}>{title}</h3>
-      <p style={{ fontSize: 11.5, color: "var(--text-secondary)", marginBottom: 14 }}>{subtitle}</p>
+      <p style={{ fontSize: 11.5, color: "var(--text-secondary)", marginBottom: tone === "quiet" ? 8 : 14 }}>{subtitle}</p>
+      {tone === "quiet" && topExtra && (
+        <p style={{ fontSize: 11, color: "var(--text-secondary)", marginBottom: 6, fontStyle: "italic" }}>
+          Spare capacity from these stations can move to {topStationName} and the other surge stations above, which
+          see up to {topExtra.toLocaleString()} extra riders.
+        </p>
+      )}
+      {tone === "quiet" && (
+        <p style={{ fontSize: 11, color: "var(--text-secondary)", marginBottom: 14, lineHeight: 1.5 }}>
+          Note: a station's everyday severity rating (Critical/High/etc.) reflects year-round crowding pressure,
+          not festival growth. A Critical station can still land here if its normal-day baseline is already so
+          high that the festival adds relatively little extra <em>on top</em> — that doesn't mean cutting its
+          normal-day resourcing, only that its festival-specific top-up is lower priority than the surge stations.
+        </p>
+      )}
       {stations.length === 0 ? (
-        <div style={{ color: "var(--text-secondary)", fontSize: 12.5 }}>
-          {tone === "quiet"
-            ? "No station shows reduced demand for this festival — every station sees a genuine surge, network-wide."
-            : "No stations in this group."}
-        </div>
+        <div style={{ color: "var(--text-secondary)", fontSize: 12.5 }}>No stations in this group.</div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           {stations.map((s) => (
             <div
               key={s.station_name}
               style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
                 padding: "10px 12px",
                 border: "1px solid var(--border)",
                 borderLeft: `3px solid ${accent}`,
                 borderRadius: 8,
-                gap: 10,
               }}
             >
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <span style={{ fontSize: 12.5, fontWeight: 600 }}>{s.station_name}</span>
-                  {s.severity_label && <SeverityBadge severity={s.severity_label} />}
-                </div>
-                <div style={{ fontSize: 10.5, color: "var(--text-secondary)", marginTop: 2 }}>Line {s.line}</div>
-              </div>
-              <div style={{ textAlign: "right" }}>
-                <div className="mono" style={{ fontSize: 14, fontWeight: 700, color: accent }}>
-                  {s.extra_riders >= 0 ? "+" : ""}
-                  {s.extra_riders.toLocaleString()}
-                </div>
-                <div style={{ fontSize: 10, color: "var(--text-secondary)" }}>riders vs normal day</div>
-                {s.suggested_extra_trains_hr !== null && s.suggested_extra_trains_hr !== undefined && (
-                  <div style={{ fontSize: 10, color: "var(--text-secondary)", marginTop: 2 }}>
-                    {s.suggested_extra_trains_hr >= 0 ? "+" : ""}
-                    {s.suggested_extra_trains_hr} trains/hr
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10 }}>
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    <span style={{ fontSize: 12.5, fontWeight: 600 }}>{s.station_name}</span>
+                    {s.severity_label && <SeverityBadge severity={s.severity_label} />}
                   </div>
-                )}
+                  <div style={{ fontSize: 10.5, color: "var(--text-secondary)", marginTop: 2 }}>Line {s.line}</div>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  <div className="mono" style={{ fontSize: 14, fontWeight: 700, color: accent }}>
+                    {s.extra_riders >= 0 ? "+" : ""}
+                    {s.extra_riders.toLocaleString()}
+                  </div>
+                  <div style={{ fontSize: 10, color: "var(--text-secondary)" }}>riders vs normal day</div>
+                  {s.suggested_extra_trains_hr !== null && s.suggested_extra_trains_hr !== undefined && (
+                    <div style={{ fontSize: 10, color: "var(--text-secondary)", marginTop: 2 }}>
+                      {s.suggested_extra_trains_hr >= 0 ? "+" : ""}
+                      {s.suggested_extra_trains_hr} trains/hr
+                    </div>
+                  )}
+                </div>
               </div>
+              {tone === "quiet" && networkAvg > 0 && (
+                <div style={{ fontSize: 10.5, color: "var(--text-secondary)", marginTop: 6 }}>
+                  Only {Math.round((s.extra_riders / networkAvg) * 100)}% of the network's average festival-day
+                  surge ({networkAvg.toLocaleString()} riders)
+                </div>
+              )}
             </div>
           ))}
         </div>

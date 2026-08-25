@@ -519,8 +519,9 @@ def get_model_comparison():
     for model in cls_folds:
         cls_folds[model].sort(key=lambda x: x["fold"])
 
-    xgb_class_report = clean_many(db["results_layer1_xgb_class_report"].find({}, {"_id": 0}))
-    rf_class_report  = clean_many(db["results_layer1_rf_class_report"].find({}, {"_id": 0}))
+    xgb_class_report   = clean_many(db["results_layer1_xgb_class_report"].find({}, {"_id": 0}))
+    rf_class_report    = clean_many(db["results_layer1_rf_class_report"].find({}, {"_id": 0}))
+    dtree_class_report = clean_many(db["results_dtree_class_report"].find({}, {"_id": 0}))
 
     forecast_summary = clean_many(db["results_model_comparison_forecasting"].find({}, {"_id": 0}))
 
@@ -531,6 +532,7 @@ def get_model_comparison():
             "class_reports": {
                 "XGBoost":       xgb_class_report,
                 "Random Forest": rf_class_report,
+                "Decision Tree": dtree_class_report,
             },
         },
         "forecasting": {
@@ -614,15 +616,33 @@ def get_festival_impact(festival_name: str):
 
     stations.sort(key=lambda s: s["extra_riders"], reverse=True)
     n = len(stations)
-    surge = [s for s in stations if s["extra_riders"] > 0][: max(1, n // 4)]
-    quiet = sorted([s for s in stations if s["extra_riders"] <= 0], key=lambda s: s["extra_riders"])[: max(1, n // 4)]
+    avg_extra = sum(s["extra_riders"] for s in stations) / n if n else 0
+
+    # Surge = top quartile by absolute extra riders. Quiet = bottom quartile — always
+    # populated with the stations that gain the LEAST relative to the rest of the
+    # network, even when every station technically sees some positive festival boost
+    # (common in this dataset, since the boost multiplier is close to uniform). Ranking
+    # relatively, not requiring negative growth, is what actually supports a resource
+    # reallocation decision: fewer extra riders here than there = move the spare
+    # buses/autos/trains from here to there.
+    surge = stations[: max(1, n // 4)]
+    quiet = stations[-max(1, n // 4):][::-1]  # ascending: smallest surge first
 
     return {
-        "festival":        festival_name,
-        "station_count":   n,
-        "stations":        stations,
-        "surge_stations":  surge,
-        "quiet_stations":  quiet,
+        "festival":            festival_name,
+        "station_count":       n,
+        "network_avg_extra_riders": round(avg_extra),
+        "stations":            stations,
+        "surge_stations":      surge,
+        "quiet_stations":      quiet,
+        "caveat": (
+            "Extra-rider estimates come from this station's own normal-day baseline times the "
+            "dataset's festival multiplier, which is applied near-uniformly network-wide rather than "
+            "reflecting real event-specific crowd patterns (e.g. Ganesh Chaturthi visarjan procession "
+            "routes). Stations with the highest normal commuter volume will rank highest here even if "
+            "they are not real-world festival hotspots — treat this as a baseline-volume-driven "
+            "estimate, not ground-truth event footfall."
+        ),
     }
 
 # ══════════════════════════════════════════════════════════════

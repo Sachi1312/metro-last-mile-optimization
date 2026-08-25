@@ -1,4 +1,5 @@
 model,mae,mape,r2,coverage
 XGBoost,197.1,2.64,0.9985,"6,473 held-out test days, all stations"
 Prophet,2064.3,5.41,0.5251,6 sample stations
+Linear Regression,806.7,16.73,0.9782,"6,473 held-out test days, all stations, same features as XGBoost"
 Seasonal Naive,1088.7,14.61,0.9378,"6,473 held-out test days, all stations"

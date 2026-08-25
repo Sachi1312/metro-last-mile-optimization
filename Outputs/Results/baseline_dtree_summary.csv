@@ -1,0 +1,2 @@
+model,test_accuracy_pct,f1_weighted_pct
+Decision Tree,92.7,92.8

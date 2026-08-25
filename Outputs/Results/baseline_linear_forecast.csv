@@ -1,0 +1,2 @@
+model,mae,mape,r2,test_rows
+Linear Regression,806.7,16.73,0.9782,6473

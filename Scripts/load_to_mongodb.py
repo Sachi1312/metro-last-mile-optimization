@@ -207,6 +207,10 @@ results = [
      "results_layer1_rf_class_report",
      ["class_label"]),
 
+    (os.path.join(RESULTS, "baseline_dtree_class_report_clean.csv"),
+     "results_dtree_class_report",
+     ["class_label"]),
+
     (os.path.join(RESULTS, "model_comparison_classification.csv"),
      "results_model_comparison_classification",
      ["model"]),

@@ -18,7 +18,9 @@ const MODEL_COLORS = {
   XGBoost: "#1565C0",
   "Random Forest": "#27ae60",
   "Logistic Regression": "#8e44ad",
+  "Decision Tree": "#E24B4A",
   Prophet: "#EF9F27",
+  "Linear Regression": "#8e44ad",
   "Seasonal Naive": "#94A3B8",
 };
 
@@ -48,7 +50,7 @@ export default function ModelComparison() {
       <Card style={{ padding: 20, marginBottom: 20 }}>
         <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 4 }}>Classification — Severity Prediction</h3>
         <p style={{ fontSize: 11.5, color: "var(--text-secondary)", marginBottom: 16 }}>
-          5-fold stratified cross-validation accuracy, identical feature set and folds across all three models
+          5-fold stratified cross-validation accuracy, identical feature set and folds across all four models
         </p>
         <ClassificationChart summary={classification.summary} />
         <SummaryTable
@@ -63,9 +65,10 @@ export default function ModelComparison() {
         <Verdict>
           <strong>XGBoost chosen</strong> for classification: matches or leads on CV accuracy (95.6%) while
           handling the mixed numeric/categorical feature set natively and giving usable feature-importance
-          rankings for interpretability — Logistic Regression ties on accuracy here only because the classes
-          are strongly separated by a few dominant features (e.g. interchange status), which won't generalize
-          as well if the feature set grows.
+          rankings for interpretability. The single Decision Tree overfits badly (100% train vs 92.7% test —
+          a 7.3-point gap) which is exactly the failure mode Random Forest's ensembling exists to fix.
+          Logistic Regression ties on accuracy here only because the classes are strongly separated by a few
+          dominant features (e.g. interchange status), which won't generalize as well if the feature set grows.
         </Verdict>
       </Card>
 
@@ -90,7 +93,10 @@ export default function ModelComparison() {
           <strong>XGBoost chosen</strong> for forecasting: 2.64% MAPE against a 14.61% MAPE seasonal-naive
           baseline shows the model is capturing real signal beyond "same day last week," and it beats
           Prophet's per-station average (5.41% MAPE) by combining calendar, festival, monsoon, and
-          interchange features Prophet doesn't use directly.
+          interchange features Prophet doesn't use directly. Tellingly, Linear Regression trained on the
+          exact same feature set XGBoost uses still comes in at 16.73% MAPE — worse than the naive
+          baseline — confirming the footfall relationships are meaningfully nonlinear and a tree-based
+          model is doing real work here, not just having more features to lean on.
         </Verdict>
       </Card>
     </div>
