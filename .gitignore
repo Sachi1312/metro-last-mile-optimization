@@ -2,6 +2,7 @@
 __pycache__/
 *.pkl
 *.pyc
+.claude/
 
 # Large data files — add to Git LFS or exclude entirely
 Data/Raw/03_hourly_ridership_12mo.csv
