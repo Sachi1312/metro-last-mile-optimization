@@ -47,6 +47,23 @@ The stack combines ridership forecasting, station classification, intervention p
 
 ---
 
+## LMPI labels vs clean classifier (faculty point)
+
+**LMPI is still the station priority index** — it colors the map, ranks interventions, and defines Critical / High / Medium. Mumbai and Delhi LMPI both come from the same weighted survey formula.
+
+**The severity classifier that we report as “honest” does *not* take LMPI as input.** Faculty feedback was that ~95% accuracy is inflated if the model can see the same problem scores the LMPI formula uses (it almost copies the label). So we train two setups:
+
+| Setup | What the model sees | Role |
+|---|---|---|
+| **Published (leaky)** | Features that include LMPI ingredients (problem scores / related fields) | Matches the original published ~95% result |
+| **Clean (honest)** | Station facts only: `pop_density`, `auto_supply_score`, `bus_connectivity_score`, `walk_dist_m`, `is_interchange`, `is_elevated` | The number to discuss in viva / review |
+
+Clean deliberately **excludes** `lmpi_score`, auto/walk/bus/crowd/safety problem scores, LMPI percentile, and accessibility score.
+
+In short: **LMPI labels the stations; the clean model predicts that label from station facts without being spoon-fed LMPI.** Delhi holdout and combined Mumbai+Delhi CV both use this clean feature set. Shown on the dashboard under **Model Comparison → Honest evaluation**.
+
+---
+
 ## Project Structure
 
 ```
@@ -93,10 +110,10 @@ LY Project/
 
 ### Layer 1 — Station Classification
 - **Models:** Random Forest + XGBoost (+ Decision Tree baseline)
-- **Features:** engineered station features, 5-fold cross-validation
-- **Output:** Priority class (Critical / High / Medium) per station
-- **Published accuracy:** RF 94.2% · XGBoost 95.6%
-- **Honest (clean) accuracy:** ~75% Mumbai-only · ~76.5% Mumbai+Delhi
+- **Target:** LMPI severity band (Critical / High / Medium) — LMPI is the label, not a clean-model feature
+- **Published features:** can include LMPI ingredients → ~95.6% XGBoost (leaky / easy)
+- **Clean features:** station facts only (population, auto supply, bus connectivity, walk distance, interchange, elevated) → ~75.4% Mumbai CV · ~76.5% Mumbai+Delhi CV · 54% Delhi holdout
+- **Output:** Priority class per station; dashboard reports both published and clean so the distinction is explicit
 
 ### Layer 2 — Feature Engineering
 - Classification + forecasting feature sets
@@ -129,6 +146,8 @@ LMPI = Auto×0.28 + Walking×0.22 + Bus×0.20 + Crowding×0.18 + Safety×0.12
 | < 38 | Low | 1 |
 
 Delhi uses the **same formula**, aggregated from survey problem scores (same method as Mumbai).
+
+LMPI is for **priority scoring and ops ranking**. Predicting severity **without** those formula inputs is the clean classifier described above.
 
 ---
 
