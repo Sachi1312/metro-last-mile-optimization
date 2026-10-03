@@ -8,6 +8,8 @@ import Interventions from "./pages/Interventions.jsx";
 import InterchangeSync from "./pages/InterchangeSync.jsx";
 import FestivalImpact from "./pages/FestivalImpact.jsx";
 import ModelComparison from "./pages/ModelComparison.jsx";
+import FutureImpact from "./pages/FutureImpact.jsx";
+import { NetworkProvider } from "./context/NetworkContext.jsx";
 
 function Footer() {
   return (
@@ -27,6 +29,7 @@ function Footer() {
 
 export default function App() {
   return (
+    <NetworkProvider>
     <div style={{ display: "flex", minHeight: "100vh" }}>
       <Sidebar />
       <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
@@ -40,11 +43,13 @@ export default function App() {
             <Route path="/interventions" element={<Interventions />} />
             <Route path="/interchange" element={<InterchangeSync />} />
             <Route path="/festivals" element={<FestivalImpact />} />
+            <Route path="/future-impact" element={<FutureImpact />} />
             <Route path="/models" element={<ModelComparison />} />
           </Routes>
         </main>
         <Footer />
       </div>
     </div>
+    </NetworkProvider>
   );
 }

@@ -4,6 +4,8 @@ import api from "../api.js";
 import { PageHeader, StatTile } from "../components/ui.jsx";
 import { Loading, ErrorState } from "../components/StatusStates.jsx";
 import SeverityBadge, { severityColor, lineColor } from "../components/SeverityBadge.jsx";
+import { useNetwork } from "../context/NetworkContext.jsx";
+import SyntheticBanner from "../components/SyntheticBanner.jsx";
 
 const LINES = [
   { value: null, label: "All Lines" },
@@ -16,6 +18,7 @@ const LINES = [
 const SEVERITIES = ["Critical", "High", "Medium", "Low"];
 
 export default function NetworkMap() {
+  const { network, expansion, synthetic, surveyBacked } = useNetwork();
   const [stations, setStations] = useState(null);
   const [summary, setSummary] = useState(null);
   const [error, setError] = useState(null);
@@ -24,34 +27,68 @@ export default function NetworkMap() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setLine(null);
+    setSeverityFilter(null);
+  }, [network]);
+
+  useEffect(() => {
     let cancelled = false;
     setStations(null);
     setError(null);
-    Promise.all([api.stations(line), api.networkSummary()])
-      .then(([sRes, nRes]) => {
+    const request = expansion
+      ? api.expansionStations(network).then((res) => ({
+          stations: res.data.stations,
+          summary: res.data.summary,
+        }))
+      : Promise.all([api.stations(line), api.networkSummary()]).then(([sRes, nRes]) => ({
+          stations: sRes.data.stations,
+          summary: nRes.data,
+        }));
+    request
+      .then((payload) => {
         if (cancelled) return;
-        setStations(sRes.data.stations);
-        setSummary(nRes.data);
+        setStations(payload.stations);
+        setSummary(payload.summary);
       })
       .catch((e) => !cancelled && setError(e.message));
     return () => {
       cancelled = true;
     };
-  }, [line]);
+  }, [line, network, expansion]);
 
   if (error) return <ErrorState message={error} />;
   if (!stations) return <Loading label="Loading network data" />;
 
+  const lineOptions = expansion
+    ? [null, ...Array.from(new Set(stations.map((s) => s.line)))]
+    : null;
+
+  const visible = expansion && line ? stations.filter((s) => s.line === line) : stations;
   const filtered = severityFilter
-    ? stations.filter((s) => s.severity_label === severityFilter)
-    : stations;
+    ? visible.filter((s) => s.severity_label === severityFilter)
+    : visible;
+
+  const subtitle = network === "delhi"
+    ? "50 Delhi stations (Red / Yellow / Blue) — survey-backed LMPI, color coded by severity"
+    : synthetic
+      ? "Scenario stations. LMPI here is the formula estimated from station facts, not a survey."
+      : "69 stations across Lines 1, 2A, 7, and 3 — color coded by last-mile priority severity";
 
   return (
     <div>
-      <PageHeader
-        title="Network Map"
-        subtitle="69 stations across Lines 1, 2A, 7, and 3 — color coded by last-mile priority severity"
-      />
+      <PageHeader title="Network Map" subtitle={subtitle} />
+
+      {synthetic && (
+        <SyntheticBanner>
+          Names and line totals for future Mumbai lines follow MMRDA project pages. Figures are scenario estimates, not ticket counts.
+        </SyntheticBanner>
+      )}
+      {network === "delhi" && surveyBacked && (
+        <div style={{ padding: "12px 16px", background: "#EEF6FF", border: "1px solid #90CAF9", borderRadius: 8, fontSize: 12.5, lineHeight: 1.55, marginBottom: 18 }}>
+          <strong>Survey-backed LMPI. </strong>
+          Severity comes from 4,560 Delhi passenger responses (same formula as Mumbai). Daily ridership is still a planning scale, not DMRC ticket counts.
+        </div>
+      )}
 
       {summary && (
         <div
@@ -96,7 +133,10 @@ export default function NetworkMap() {
         }}
       >
         <FilterGroup label="Line">
-          {LINES.map((l) => (
+          {(lineOptions
+            ? [{ value: null, label: "All Lines" }, ...lineOptions.filter(Boolean).map((value) => ({ value, label: `Line ${value}` }))]
+            : LINES
+          ).map((l) => (
             <FilterButton
               key={l.label}
               active={line === l.value}

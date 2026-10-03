@@ -11,7 +11,12 @@
 
 ## Overview
 
-This project builds a 4-layer machine learning pipeline to optimize last-mile connectivity across 69 stations on Mumbai's metro network (Lines 1, 2A, 7, and 3). It combines ridership forecasting, station classification, intervention prioritization, and frequency optimization — all backed by a live MongoDB Atlas database and a FastAPI backend.
+This project builds a multi-layer machine learning pipeline for last-mile connectivity on Mumbai metro (69 stations on Lines 1, 2A, 7, and 3), with a faculty extension to:
+
+- **Delhi** — 50 Red / Yellow / Blue stations with **survey-backed LMPI** (4,560 passenger responses)
+- **Future Mumbai lines** — MMRDA Lines 2B, 4, 5, 6, 7A, and 9 as a planning scenario (synthetic LMPI)
+
+The stack combines ridership forecasting, station classification, intervention prioritization, frequency optimization, and a React dashboard with a network switcher. Results are served from MongoDB Atlas (Mumbai 69) and a file-backed expansion bundle (Delhi + future lines).
 
 ---
 
@@ -19,15 +24,26 @@ This project builds a 4-layer machine learning pipeline to optimize last-mile co
 
 | Metric | Value |
 |---|---|
-| Stations covered | 69 across 4 lines |
-| Critical stations flagged | 14 (BKC tops at LMPI 81.5) |
-| XGBoost classification accuracy | **95.6%** |
-| Random Forest accuracy | **94.2%** |
+| Mumbai stations | 69 across 4 lines |
+| Delhi stations (survey) | 50 · 4,560 responses |
+| Critical Mumbai stations | 14 (BKC tops at LMPI 81.5) |
+| Published severity accuracy (sees LMPI ingredients) | **95.6%** |
+| Clean severity CV — Mumbai only (station facts) | **~75.4%** |
+| Clean severity CV — Mumbai + Delhi | **~76.5%** |
+| Delhi holdout (Mumbai-trained clean → Delhi survey) | **54%** |
+| Future Mumbai formula agreement (no survey) | **~19.5%** |
 | XGBoost forecasting MAPE | **2.64%** |
 | XGBoost forecasting R² | **0.9985** |
 | Prophet avg MAPE | 5.41% |
 | Additional peak trains recommended | +116 across network |
 | MongoDB documents | 552,172 |
+
+**How to read the accuracy numbers**
+
+- **Published (~95%)** — original model that can see LMPI formula ingredients (easy task).
+- **Clean (~75%)** — honest model: population, walk distance, bus, auto, interchange, elevated only.
+- **Delhi holdout (54%)** — Mumbai-trained clean model tested on real Delhi survey severity (cross-city transfer).
+- **Combined clean (~76.5%)** — clean model cross-validated on Mumbai 69 + Delhi 50 labeled stations.
 
 ---
 
@@ -39,55 +55,36 @@ LY Project/
 ├── .gitignore
 ├── requirements.txt
 ├── README.md
+├── docker-compose.yml
 │
 ├── Data/
-│   ├── Raw/                      # 4 source CSVs
+│   ├── Raw/                      # Source CSVs (incl. Delhi survey + priors)
 │   │   ├── 01_station_master.csv
-│   │   ├── 02_historical_ridership_5yr.csv
-│   │   ├── 02_historical_ridership_extended.csv
-│   │   └── 03_hourly_ridership_12mo.csv
-│   └── Derived/                  # 10 feature-engineered CSVs
-│       ├── 04_lmpi_scores.csv
-│       ├── 05_temporal_features.csv
-│       ├── 06_frequency_optimization.csv
-│       ├── 07_intervention_scores.csv
-│       ├── 08_survey_responses.csv
-│       ├── 10_classification_ready.csv
-│       └── 12_classification_features.csv
+│   │   ├── 02_historical_ridership_*.csv
+│   │   ├── 03_hourly_ridership_12mo.csv
+│   │   ├── 09_delhi_survey_responses.csv
+│   │   └── 10_delhi_station_priors.csv
+│   └── Derived/                  # Feature-engineered CSVs
 │
-├── Scripts/                      # 16 Python scripts (all complete)
-│   ├── derive_01_lmpi.py
-│   ├── derive_02_temporal.py
-│   ├── derive_03_frequency.py
-│   ├── derive_04_intervention.py
-│   ├── preprocess.py
-│   ├── eda.py
-│   ├── feature_engineering.py
-│   ├── layer1_classification.py
-│   ├── layer3_forecasting.py
-│   ├── layer4_optimization.py
-│   ├── interchange_sync.py
-│   ├── generate_2025_extension.py
-│   ├── generate_2026_forecast.py
-│   ├── load_to_mongodb.py
-│   ├── validate_data.py
-│   └── update_monthly.py
+├── Scripts/                      # Pipeline + expansion build
+│   ├── derive_*.py / layer*.py / ...
+│   └── build_expansion.py        # Delhi survey LMPI + future Mumbai bundle
 │
 ├── Backend/
-│   ├── database.py               # MongoDB connection via pymongo + dotenv
-│   └── main.py                   # FastAPI — 10 REST endpoints
+│   ├── database.py
+│   ├── main.py                   # FastAPI (Mumbai Mongo + expansion routes)
+│   └── expansion_bundle.json     # Served to the dashboard
 │
-├── Models/                       # 9 trained .pkl files
-│   ├── rf_classifier.pkl
-│   ├── xgb_classifier.pkl
-│   ├── xgb_forecaster.pkl
-│   └── prophet_*.pkl             # Per-station Prophet models
+├── Frontend/                     # React dashboard (network switcher)
 │
-├── Notebooks/                    # 5 Jupyter notebooks (explanation + walkthroughs)
+├── Models/                       # Trained .pkl files
+├── Notebooks/
+├── Docs/                         # Literature notes
 │
 └── Outputs/
-    ├── Plots/                    # 27 EDA + model result plots
-    └── Results/                  # 12 CSV result files
+    ├── Expansion/bundle.json
+    ├── Plots/
+    └── Results/
 ```
 
 ---
@@ -95,25 +92,26 @@ LY Project/
 ## ML Pipeline
 
 ### Layer 1 — Station Classification
-- **Models:** Random Forest + XGBoost
-- **Features:** 32 engineered features, 5-fold cross-validation
+- **Models:** Random Forest + XGBoost (+ Decision Tree baseline)
+- **Features:** engineered station features, 5-fold cross-validation
 - **Output:** Priority class (Critical / High / Medium) per station
-- **Accuracy:** RF 94.2% · XGBoost 95.6%
+- **Published accuracy:** RF 94.2% · XGBoost 95.6%
+- **Honest (clean) accuracy:** ~75% Mumbai-only · ~76.5% Mumbai+Delhi
 
 ### Layer 2 — Feature Engineering
-- 38 classification features + 45 forecasting features
+- Classification + forecasting feature sets
 - Zero nulls, fully preprocessed
 
 ### Layer 3 — Ridership Forecasting
-- **Models:** XGBoost (network-wide) + Prophet (per key station)
-- **Output:** 30-day forecast + Jan–Jun 2026 forecast (12,489 rows)
+- **Models:** XGBoost (network-wide) + Prophet (per key station) + Linear Regression baseline
+- **Output:** 30-day forecast + Jan–Jun 2026 forecast
 - **XGBoost:** MAPE 2.64%, R² 0.9985
 - **Prophet stations:** Andheri, Ghatkopar, Marol Naka, DN Nagar, Chakala, WEH
 
 ### Layer 4 — Optimization
-- **Intervention scoring:** Ranked queue for 52 flagged stations
+- **Intervention scoring:** Ranked last-mile actions (bus / auto / cab)
 - **Frequency optimization:** Trains/hr per time window
-- **Interchange sync:** 3 stations × 5 windows × 6 events = 90 sync rows
+- **Interchange sync:** Metro-to-metro planning waits (no railway / monorail links)
 
 ---
 
@@ -123,25 +121,37 @@ LY Project/
 LMPI = Auto×0.28 + Walking×0.22 + Bus×0.20 + Crowding×0.18 + Safety×0.12
 ```
 
-| Score | Category | Stations |
+| Score | Category | Stations (Mumbai 69) |
 |---|---|---|
 | ≥ 64 | Critical | 14 |
 | 52–63 | High | 38 |
 | 38–51 | Medium | 16 |
 | < 38 | Low | 1 |
 
+Delhi uses the **same formula**, aggregated from survey problem scores (same method as Mumbai).
+
+---
+
+## Dashboard networks
+
+| Network | LMPI source | Ridership |
+|---|---|---|
+| Mumbai — 69 stations | Survey-backed (MongoDB) | Observed / calibrated |
+| Delhi — 50 stations | Survey-backed (4,560 responses) | Scenario scale (not DMRC tickets) |
+| Mumbai — future lines | Formula from station facts (synthetic) | MMRDA 2031 × 0.45 split |
+
+Use the sidebar network menu to switch. Orange “synthetic” banners apply only to future Mumbai lines.
+
 ---
 
 ## Backend API
-
-Run the FastAPI backend:
 
 ```bash
 cd Backend
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-Available endpoints:
+Core Mumbai endpoints:
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -155,6 +165,9 @@ Available endpoints:
 | GET | `/frequency/{name}` | Trains/hr recommendations |
 | GET | `/interchange` | Interchange sync analysis |
 | GET | `/lmpi/line/{line}` | All stations on a line |
+| GET | `/models/comparison` | Classification + forecasting comparison |
+
+Expansion endpoints (Delhi + future Mumbai): `/expansion/stations`, `/expansion/evaluation`, `/expansion/forecast`, `/expansion/festivals`, `/expansion/interventions`, `/expansion/interchange`, and related routes. Query with `?network=delhi` or `?network=mumbai_future`.
 
 ---
 
@@ -170,6 +183,8 @@ Set your connection URI in a `.env` file:
 ```
 MONGO_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/metropt
 ```
+
+Delhi and future-line pages read from `Backend/expansion_bundle.json` (not Mongo).
 
 ---
 
@@ -209,6 +224,9 @@ python Scripts/interchange_sync.py
 
 # 5. Load to MongoDB
 python Scripts/load_to_mongodb.py
+
+# 6. Faculty extension bundle (Delhi survey + future Mumbai)
+python Scripts/build_expansion.py
 ```
 
 ### Monthly update
@@ -223,7 +241,8 @@ python Scripts/update_monthly.py   # ~3.8 min retrain
 The Backend (FastAPI) and Frontend (React dashboard) are containerized so the app can be
 demoed with one command, without installing Node or Python locally. The ML pipeline
 (Scripts/, Models/) is not containerized — those run once, ahead of time, on the host, and
-their output already lives in MongoDB Atlas by the time you run the containers.
+their Mumbai output already lives in MongoDB Atlas by the time you run the containers.
+Rebuild the expansion bundle before Docker if you change Delhi survey data or assumptions.
 
 ### Prerequisites
 - Docker Desktop
@@ -246,9 +265,8 @@ need different ports.)
 `docker compose down` stops both containers. Rebuild after changing backend/frontend code with
 `docker compose up -d --build` again — Docker caches unchanged layers so rebuilds are fast.
 
-The backend image only installs `fastapi`, `uvicorn`, `pymongo`, and `python-dotenv`
-(`Backend/requirements.txt`) — not the full ML stack in the root `requirements.txt`, since the
-API only reads pre-computed results from MongoDB and never re-runs the models.
+The backend image installs a lean API stack (`Backend/requirements.txt`) plus the expansion
+bundle — not the full ML stack in the root `requirements.txt`.
 
 ---
 
@@ -258,7 +276,26 @@ API only reads pre-computed results from MongoDB and never re-runs the models.
 - COVID years (2020–21) kept with `is_covid=1` flag
 - Apr–Dec 2025 synthetic extension flagged with `is_synthetic=1`
 - Festival window = ±2 days to reduce boundary overlap
-- Survey data: real Aqua Line responses + mirrored synthetic data
+- Mumbai survey: real Aqua Line responses + mirrored synthetic data where needed
+- Delhi survey: station-level responses in `Data/Raw/09_delhi_survey_responses.csv` (4,560 rows)
+- Delhi priors: `Data/Raw/10_delhi_station_priors.csv` (notes / confidence — not model inputs)
+
+---
+
+## Faculty-review extension
+
+`Scripts/build_expansion.py` writes `Outputs/Expansion/bundle.json` and copies it to
+`Backend/expansion_bundle.json`. It does **not** replace the original 69-station Mongo results.
+
+- **Future Mumbai** (Lines 2B, 4, 5, 6, 7A, 9): MMRDA station lists; daily riders = published 2031 line totals × 0.45. LMPI is formula-estimated; only formula-agreement transfer is reported.
+- **Delhi**: survey-backed LMPI and severity (same aggregation as Mumbai). Daily ridership remains a role-based scenario scale, not DMRC ticket counts.
+- **Evaluation reported in the dashboard (Model Comparison):**
+  - Published vs clean severity (Mumbai)
+  - Leave-one-line-out + learning curve
+  - Delhi survey holdout accuracy + confusion matrix
+  - Combined Mumbai+Delhi clean CV
+  - Future Mumbai formula-agreement transfer check
+- On Mumbai 69, **Future Impact** shows extra riders only at stations where a new line meets the existing network.
 
 ---
 
@@ -266,5 +303,6 @@ API only reads pre-computed results from MongoDB and never re-runs the models.
 
 - Reinforcement learning (requires live AFCS feed)
 - Automated monthly scheduler
-- Live AFCS API integration
+- Live AFCS / DMRC ridership feeds for Delhi
 - Research paper submission
+- Replacing future-Mumbai scenario rows with observed ridership when those feeds exist

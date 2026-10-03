@@ -5,7 +5,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY database.py main.py ./
+COPY database.py main.py expansion_bundle.json ./
 
 EXPOSE 8000
 

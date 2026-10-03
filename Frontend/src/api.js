@@ -28,6 +28,22 @@ export const api = {
   modelComparison: () => client.get("/models/comparison"),
   festivals: () => client.get("/festivals"),
   festivalImpact: (festivalName) => client.get(`/festivals/${encodeURIComponent(festivalName)}`),
+  expansionNetworks: () => client.get("/expansion/networks"),
+  expansionStations: (network) => client.get("/expansion/stations", { params: { network } }),
+  expansionStation: (name, network) =>
+    client.get(`/expansion/station/${encodeURIComponent(name)}`, { params: { network } }),
+  expansionFestivals: (network) => client.get("/expansion/festivals", { params: { network } }),
+  expansionFestivalImpact: (name, network) =>
+    client.get(`/expansion/festivals/${encodeURIComponent(name)}`, { params: { network } }),
+  expansionForecast: (name, network) =>
+    client.get(`/expansion/forecast/${encodeURIComponent(name)}`, { params: { network } }),
+  expansionInterventions: (network) => client.get("/expansion/interventions", { params: { network } }),
+  expansionInterchange: (network) => client.get("/expansion/interchange", { params: { network } }),
+  expansionEvaluation: () => client.get("/expansion/evaluation"),
+  expansionChoice: (network, stationName) =>
+    client.get("/expansion/choice", { params: { network, station_name: stationName || undefined } }),
+  expansionFutureImpact: () => client.get("/expansion/future-impact"),
+  expansionClassification: (network) => client.get("/expansion/classification", { params: { network } }),
 };
 
 export default api;

@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { NETWORKS, useNetwork } from "../context/NetworkContext.jsx";
 
 const NAV_ITEMS = [
   { to: "/", label: "Network Map", icon: "grid" },
@@ -8,6 +9,7 @@ const NAV_ITEMS = [
   { to: "/interventions", label: "Interventions", icon: "wrench" },
   { to: "/interchange", label: "Interchange Sync", icon: "swap" },
   { to: "/festivals", label: "Festival Impact", icon: "spark" },
+  { to: "/future-impact", label: "Future Impact", icon: "spark", mumbaiOnly: true },
   { to: "/models", label: "Model Comparison", icon: "compare" },
 ];
 
@@ -61,7 +63,14 @@ const ICONS = {
   ),
 };
 
+const NETWORK_HELP = {
+  mumbai69: "Survey-backed main analysis for the original 69 stations.",
+  mumbai_future: "Synthetic MMRDA future-line stations. Orange banner marks estimated figures.",
+  delhi: "Survey-backed Delhi Red / Yellow / Blue (50 stations, 4,560 responses).",
+};
+
 export default function Sidebar() {
+  const { network, setNetwork } = useNetwork();
   return (
     <aside
       style={{
@@ -101,8 +110,26 @@ export default function Sidebar() {
         </div>
       </div>
 
-      <nav style={{ padding: 12, display: "flex", flexDirection: "column", gap: 2, flex: 1 }}>
-        {NAV_ITEMS.map((item) => (
+      <div style={{ padding: "12px 12px 4px", display: "flex", flexDirection: "column", gap: 6 }}>
+        <label style={{ fontSize: 10.5, fontWeight: 700, color: "var(--text-secondary)", letterSpacing: 0.4 }}>
+          NETWORK
+          <select
+            value={network}
+            onChange={(e) => setNetwork(e.target.value)}
+            style={{ display: "block", width: "100%", marginTop: 4, padding: "8px 8px", borderRadius: 8, border: "1px solid var(--border)", background: "var(--card)", fontSize: 12.5 }}
+          >
+            {NETWORKS.map((n) => (
+              <option key={n.id} value={n.id}>{n.label}</option>
+            ))}
+          </select>
+        </label>
+        <p style={{ margin: 0, fontSize: 11, color: "var(--text-secondary)", lineHeight: 1.45 }}>
+          {NETWORK_HELP[network]}
+        </p>
+      </div>
+
+      <nav style={{ padding: 12, display: "flex", flexDirection: "column", gap: 2, flex: 1, overflowY: "auto" }}>
+        {NAV_ITEMS.filter((item) => !item.mumbaiOnly || network !== "delhi").map((item) => (
           <NavLink
             key={item.to}
             to={item.to}

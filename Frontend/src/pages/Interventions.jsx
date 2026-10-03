@@ -3,11 +3,65 @@ import api from "../api.js";
 import { PageHeader, StatTile } from "../components/ui.jsx";
 import { Loading, ErrorState } from "../components/StatusStates.jsx";
 import SeverityBadge, { severityColor } from "../components/SeverityBadge.jsx";
-import { estimateFleetCount, fleetLabel, aggregateFleetCounts } from "../utils/fleetEstimate.js";
+import { fleetLabel, aggregateFleetCounts, resolveFleet } from "../utils/fleetEstimate.js";
+import { useNetwork } from "../context/NetworkContext.jsx";
+import SyntheticBanner from "../components/SyntheticBanner.jsx";
 
 const SEVERITIES = ["Critical", "High", "Medium", "Low"];
 
 export default function Interventions() {
+  const { expansion } = useNetwork();
+  if (expansion) return <ExpansionInterventions />;
+  return <MumbaiInterventions />;
+}
+
+function ExpansionInterventions() {
+  const { network, synthetic, surveyBacked } = useNetwork();
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    api
+      .expansionInterventions(network)
+      .then((res) => setData(res.data))
+      .catch((e) => setError(e.message));
+  }, [network]);
+
+  if (error) return <ErrorState message={error} />;
+  if (!data) return <Loading label="Loading scenario interventions" />;
+
+  const maxImpact = Math.max(...data.interventions.map((iv) => iv.impact_score || 0), 1);
+  return (
+    <div>
+      <PageHeader
+        title="Interventions"
+        subtitle={
+          network === "delhi"
+            ? "Last-mile bus / auto / cab actions ranked from survey-backed LMPI factors on Delhi stations."
+            : "Last-mile public transport actions only — bus feeders, auto/e-rickshaw bays, and cab aggregator slots."
+        }
+      />
+      {synthetic && (
+        <SyntheticBanner>
+          Each action is sized to that station&apos;s area type, peak window, and ridership. Bus / auto / cab only — costs are planning allowances, not tenders.
+        </SyntheticBanner>
+      )}
+      {network === "delhi" && surveyBacked && (
+        <div style={{ padding: "12px 16px", background: "#EEF6FF", border: "1px solid #90CAF9", borderRadius: 8, fontSize: 12.5, lineHeight: 1.55, marginBottom: 18 }}>
+          <strong>Survey-backed priority. </strong>
+          Actions follow Delhi LMPI gaps; fleet sizes use scenario ridership. Costs are planning allowances, not tenders.
+        </div>
+      )}
+      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        {data.interventions.slice(0, 40).map((iv, i) => (
+          <InterventionCard key={`${iv.station_name}-${i}`} iv={iv} rank={i + 1} maxImpact={maxImpact} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MumbaiInterventions() {
   const [severity, setSeverity] = useState(null);
   const [data, setData] = useState(null);
   const [networkTotals, setNetworkTotals] = useState(null);
@@ -121,7 +175,7 @@ function FilterButton({ active, onClick, children, dot }) {
 function InterventionCard({ iv, rank, maxImpact }) {
   const color = severityColor(iv.severity_label);
   const pct = ((iv.impact_score || 0) / maxImpact) * 100;
-  const fleet = estimateFleetCount(iv.intervention, iv.estimated_cost_lakhs);
+  const fleet = resolveFleet(iv);
   return (
     <div
       style={{
@@ -156,7 +210,7 @@ function InterventionCard({ iv, rank, maxImpact }) {
         {rank}
       </div>
 
-      <div style={{ flex: "2 1 260px", minWidth: 220 }}>
+      <div style={{ flex: "2 1 280px", minWidth: 240 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
           <span style={{ fontWeight: 600, fontSize: 13.5 }}>{iv.intervention}</span>
           <SeverityBadge severity={iv.severity_label} />
@@ -165,6 +219,16 @@ function InterventionCard({ iv, rank, maxImpact }) {
           {iv.station_name} · Line {iv.line} · {iv.priority} priority
           {fleet && ` · ≈ ${fleet.count} ${fleetLabel(fleet.type)}`}
         </div>
+        {iv.peak_window && (
+          <div style={{ fontSize: 11.5, color: "var(--text-secondary)", marginTop: 3 }}>
+            Peak: {iv.peak_window}
+          </div>
+        )}
+        {iv.rationale && (
+          <div style={{ fontSize: 11.5, color: "var(--text-secondary)", marginTop: 2, lineHeight: 1.45 }}>
+            {iv.rationale}
+          </div>
+        )}
       </div>
 
       <div style={{ flex: "1 1 160px", minWidth: 140 }}>

@@ -14,10 +14,11 @@
 #   GET /lmpi/line/{line}          → all stations on a line
 # ============================================================
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from database import get_db
 from datetime import datetime
+import json
 import os
 
 app = FastAPI(
@@ -644,6 +645,227 @@ def get_festival_impact(festival_name: str):
             "estimate, not ground-truth event footfall."
         ),
     }
+
+# ══════════════════════════════════════════════════════════════
+# EXPANSION — Delhi, future Mumbai, choice model, evaluation
+# File-backed so these scenario results stay separate from the
+# original Mongo collections for the 69 stations.
+# ══════════════════════════════════════════════════════════════
+_BUNDLE = None
+
+
+def _bundle_path():
+    here = os.path.dirname(__file__)
+    candidates = [
+        os.path.join(here, "..", "Outputs", "Expansion", "bundle.json"),
+        os.path.join(here, "expansion_bundle.json"),
+    ]
+    for path in candidates:
+        if os.path.exists(path):
+            return path
+    return candidates[0]
+
+
+def expansion_bundle():
+    global _BUNDLE
+    if _BUNDLE is None:
+        path = _bundle_path()
+        if not os.path.exists(path):
+            raise HTTPException(status_code=503, detail="Expansion bundle is missing. Run Scripts/build_expansion.py")
+        with open(path, encoding="utf-8") as f:
+            _BUNDLE = json.load(f)
+    return _BUNDLE
+
+
+def expansion_stations(network: str):
+    rows = [s for s in expansion_bundle()["stations"] if s["network"] == network]
+    if not rows:
+        raise HTTPException(status_code=404, detail=f"Unknown network '{network}'")
+    return rows
+
+
+@app.get("/expansion/networks")
+def expansion_networks():
+    return {"networks": expansion_bundle()["networks"], "assumptions": expansion_bundle()["assumptions"]}
+
+
+@app.get("/expansion/stations")
+def expansion_station_list(network: str = Query(...)):
+    rows = expansion_stations(network)
+    slim = []
+    for s in rows:
+        slim.append({
+            "station_name": s["station_name"],
+            "line": s["line"],
+            "role": s["role"],
+            "is_interchange": s["is_interchange"],
+            "is_elevated": s["is_elevated"],
+            "pop_density": s["pop_density"],
+            "lmpi_score": s["lmpi_score"],
+            "severity_label": s["severity_label"],
+            "daily_riders": s["daily_riders"],
+            "opt_in_probability": s["opt_in_probability"],
+            "discovered_cluster": s["discovered_cluster"],
+            "is_synthetic": bool(s.get("is_synthetic", True)),
+            "data_source": s.get("data_source"),
+            "recommended_last_mile": s.get("recommended_last_mile"),
+            "recommended_trains_hr": s["recommended_trains_hr"],
+            "current_trains_hr": s["current_trains_hr"],
+        })
+    slim.sort(key=lambda r: r["lmpi_score"], reverse=True)
+    sev = {}
+    for r in slim:
+        sev[r["severity_label"]] = sev.get(r["severity_label"], 0) + 1
+    synthetic = all(r.get("is_synthetic", True) for r in slim)
+    return {
+        "count": len(slim),
+        "stations": slim,
+        "synthetic": synthetic,
+        "survey_backed": network == "delhi" and not synthetic,
+        "summary": {
+            "total_stations": len(slim),
+            "severity_distribution": sev,
+            "avg_lmpi_score": round(sum(r["lmpi_score"] for r in slim) / len(slim), 1),
+            "top_critical_station": next((r for r in slim if r["severity_label"] == "Critical"), slim[0]),
+        },
+    }
+
+
+@app.get("/expansion/station/{station_name}")
+def expansion_station(station_name: str, network: str = Query(...)):
+    for s in expansion_stations(network):
+        if s["station_name"] == station_name:
+            return s
+    raise HTTPException(status_code=404, detail=f"Station '{station_name}' not in {network}")
+
+
+@app.get("/expansion/festivals")
+def expansion_festivals(network: str = Query(...)):
+    block = expansion_bundle()["festivals"].get(network)
+    if not block:
+        raise HTTPException(status_code=404, detail=f"No festivals for {network}")
+    return {"festivals": list(block.keys())}
+
+
+@app.get("/expansion/festivals/{festival_name}")
+def expansion_festival(festival_name: str, network: str = Query(...)):
+    block = expansion_bundle()["festivals"].get(network, {})
+    if festival_name not in block:
+        raise HTTPException(status_code=404, detail=f"No festival '{festival_name}' for {network}")
+    return block[festival_name]
+
+
+@app.get("/expansion/forecast/{station_name}")
+def expansion_forecast(station_name: str, network: str = Query(...)):
+    station = expansion_station(station_name, network)
+    return {
+        "station_name": station["station_name"],
+        "synthetic": True,
+        "note": "30-day scenario from this station's own daily level. This is not the 2.64% Mumbai XGBoost forecast.",
+        "forecast": station["forecast_30"],
+        "daily_riders": station["daily_riders"],
+    }
+
+
+@app.get("/expansion/interventions")
+def expansion_interventions(network: str = Query(...)):
+    rows = []
+    fallback_cost = {"auto": 8, "bus": 40, "cab": 12}
+    for s in expansion_stations(network):
+        for iv in s["interventions"]:
+            rows.append({
+                "station_name": s["station_name"],
+                "line": s["line"],
+                "role": s.get("role"),
+                "severity_label": s["severity_label"],
+                "lmpi_score": s["lmpi_score"],
+                "impact_score": iv["impact_score"],
+                "intervention": iv["intervention"],
+                "recommended_trains_hr": s["recommended_trains_hr"],
+                "current_trains_hr": s["current_trains_hr"],
+                "priority": s["severity_label"],
+                "estimated_cost_lakhs": iv.get(
+                    "estimated_cost_lakhs",
+                    fallback_cost.get(iv.get("problem"), 10),
+                ),
+                "fleet_count": iv.get("fleet_count"),
+                "fleet_type": iv.get("fleet_type"),
+                "peak_window": iv.get("peak_window"),
+                "rationale": iv.get("rationale"),
+            })
+    rows.sort(key=lambda r: r["impact_score"], reverse=True)
+    return {"interventions": rows, "synthetic": True, "count": len(rows)}
+
+
+@app.get("/expansion/interchange")
+def expansion_interchange(network: str = Query(...)):
+    rows = [r for r in expansion_bundle()["interchange"] if r["network"] == network]
+    return {"rows": rows, "synthetic": True}
+
+
+@app.get("/expansion/evaluation")
+def expansion_evaluation():
+    return expansion_bundle()["evaluation"]
+
+
+@app.get("/expansion/choice")
+def expansion_choice(network: str = Query("mumbai69"), station_name: str = None):
+    ev = expansion_bundle()["evaluation"]["choice_model"]
+    if network == "mumbai69":
+        rows = expansion_bundle()["mumbai_choice"]
+    else:
+        rows = [
+            {
+                "station_name": s["station_name"],
+                "line": s["line"],
+                "opt_in_probability": s["opt_in_probability"],
+                "survey_opt_in_rate": None,
+                "opt_in_source": s["opt_in_source"],
+                "discovered_cluster": s["discovered_cluster"],
+            }
+            for s in expansion_stations(network)
+        ]
+    if station_name:
+        rows = [r for r in rows if r["station_name"] == station_name]
+        if not rows:
+            raise HTTPException(status_code=404, detail=f"No choice row for {station_name}")
+    return {
+        "coefficients": ev["coefficients"],
+        "accuracy": ev["accuracy"],
+        "precision_weighted": ev["precision_weighted"],
+        "recall_weighted": ev["recall_weighted"],
+        "f1_weighted": ev["f1_weighted"],
+        "majority_baseline": ev["majority_baseline"],
+        "rule": ev["rule"],
+        "rows": rows,
+    }
+
+
+@app.get("/expansion/future-impact")
+def expansion_future_impact():
+    return expansion_bundle()["future_impact"]
+
+
+@app.get("/expansion/classification")
+def expansion_classification(network: str = Query(...)):
+    rows = expansion_stations(network)
+    clusters = {}
+    severities = {}
+    for s in rows:
+        clusters[s["discovered_cluster"]] = clusters.get(s["discovered_cluster"], 0) + 1
+        severities[s["severity_label"]] = severities.get(s["severity_label"], 0) + 1
+    return {
+        "synthetic": True,
+        "severity_distribution": severities,
+        "clusters": clusters,
+        "note": "Severity here is the LMPI formula. The cluster is the discovered group. They are not the same label.",
+        "evaluation": {
+            "clean": expansion_bundle()["evaluation"]["clean_severity_model"],
+            "published": expansion_bundle()["evaluation"]["leaky_severity_model"],
+            "clusters": expansion_bundle()["evaluation"]["clusters"],
+        },
+    }
+
 
 # ══════════════════════════════════════════════════════════════
 # RUN SERVER

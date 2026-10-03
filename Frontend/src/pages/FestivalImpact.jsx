@@ -11,10 +11,13 @@ import api from "../api.js";
 import { Card, PageHeader } from "../components/ui.jsx";
 import { Loading, ErrorState } from "../components/StatusStates.jsx";
 import SeverityBadge from "../components/SeverityBadge.jsx";
+import { useNetwork } from "../context/NetworkContext.jsx";
+import SyntheticBanner from "../components/SyntheticBanner.jsx";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
 
 export default function FestivalImpact() {
+  const { network, expansion, synthetic, surveyBacked } = useNetwork();
   const [festivals, setFestivals] = useState(null);
   const [selected, setSelected] = useState("");
   const [impact, setImpact] = useState(null);
@@ -22,29 +25,32 @@ export default function FestivalImpact() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    api
-      .festivals()
+    setFestivals(null);
+    setSelected("");
+    setImpact(null);
+    const request = expansion ? api.expansionFestivals(network) : api.festivals();
+    request
       .then((res) => {
         setFestivals(res.data.festivals);
         if (res.data.festivals.length) setSelected(res.data.festivals[0]);
       })
       .catch((e) => setError(e.message));
-  }, []);
+  }, [network, expansion]);
 
   useEffect(() => {
     if (!selected) return;
     let cancelled = false;
     setLoading(true);
     setError(null);
-    api
-      .festivalImpact(selected)
+    const request = expansion ? api.expansionFestivalImpact(selected, network) : api.festivalImpact(selected);
+    request
       .then((res) => !cancelled && setImpact(res.data))
       .catch((e) => !cancelled && setError(e.message))
       .finally(() => !cancelled && setLoading(false));
     return () => {
       cancelled = true;
     };
-  }, [selected]);
+  }, [selected, network, expansion]);
 
   if (error) return <ErrorState message={error} />;
 
@@ -52,7 +58,13 @@ export default function FestivalImpact() {
     <div>
       <PageHeader
         title="Festival Impact"
-        subtitle="Which stations see the biggest festival-day surge and which see the least — so spare trains, autos, and buses shift to where demand actually is"
+        subtitle={
+          network === "delhi"
+            ? "Festival surge on Delhi stations using Delhi busy-day list. Severity is survey-backed; extra riders use scenario daily levels."
+            : synthetic
+              ? "Festival surge on this scenario network. Future Mumbai lines use the Mumbai festival list."
+              : "Which stations see the biggest festival-day surge and which see the least — so spare trains, autos, and buses shift to where demand actually is"
+        }
         right={
           festivals && (
             <select
@@ -77,6 +89,18 @@ export default function FestivalImpact() {
           )
         }
       />
+
+      {synthetic && (
+        <SyntheticBanner>
+          Extra riders are this station&apos;s scenario daily level times the festival percentage. They are not ticket counts.
+        </SyntheticBanner>
+      )}
+      {network === "delhi" && surveyBacked && (
+        <div style={{ padding: "12px 16px", background: "#EEF6FF", border: "1px solid #90CAF9", borderRadius: 8, fontSize: 12.5, lineHeight: 1.55, marginBottom: 18 }}>
+          <strong>Survey-backed severity; scenario ridership. </strong>
+          Extra riders are this station&apos;s scenario daily level times the festival percentage — not DMRC ticket counts.
+        </div>
+      )}
 
       {loading || !impact ? (
         <Loading label={`Loading ${selected || "festival"} impact`} />

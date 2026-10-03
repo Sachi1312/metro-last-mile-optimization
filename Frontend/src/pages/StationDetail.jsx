@@ -17,6 +17,8 @@ import { Loading, ErrorState } from "../components/StatusStates.jsx";
 import SeverityBadge, { severityColor } from "../components/SeverityBadge.jsx";
 import { estimateFleetCount, fleetLabel } from "../utils/fleetEstimate.js";
 import { roleLabel } from "../utils/roleLabel.js";
+import { useNetwork } from "../context/NetworkContext.jsx";
+import SyntheticBanner from "../components/SyntheticBanner.jsx";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Tooltip, Filler);
 
@@ -113,6 +115,113 @@ const FACTORS = [
 ];
 
 export default function StationDetail() {
+  const { expansion } = useNetwork();
+  if (expansion) return <ExpansionStationDetail />;
+  return <MumbaiStationDetail />;
+}
+
+function ExpansionStationDetail() {
+  const { network, synthetic, surveyBacked } = useNetwork();
+  const { name } = useParams();
+  const [stations, setStations] = useState(null);
+  const [station, setStation] = useState(null);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    api
+      .expansionStations(network)
+      .then((res) => setStations(res.data.stations))
+      .catch((e) => setError(e.message));
+  }, [network]);
+
+  useEffect(() => {
+    const target = name || stations?.[0]?.station_name;
+    if (!target) return;
+    api
+      .expansionStation(target, network)
+      .then((res) => setStation(res.data))
+      .catch((e) => setError(e.message));
+  }, [name, network, stations]);
+
+  if (error) return <ErrorState message={error} />;
+  if (!station) return <Loading label="Loading station" />;
+
+  return (
+    <div>
+      <PageHeader
+        title={station.station_name}
+        subtitle={`Line ${station.line} · ${station.discovered_cluster}`}
+        right={
+          stations && (
+            <select
+              value={station.station_name}
+              onChange={(e) => navigate(`/station/${encodeURIComponent(e.target.value)}`)}
+              style={{ padding: "9px 14px", borderRadius: 8, border: "1px solid var(--border)", minWidth: 220 }}
+            >
+              {stations.map((s) => (
+                <option key={s.station_name} value={s.station_name}>{s.station_name}</option>
+              ))}
+            </select>
+          )
+        }
+      />
+      {synthetic && (
+        <SyntheticBanner>
+          LMPI is the formula estimated from station facts. Opt-in is a transfer prediction from the Mumbai survey model, not a local survey.
+        </SyntheticBanner>
+      )}
+      {network === "delhi" && surveyBacked && (
+        <div style={{ padding: "12px 16px", background: "#EEF6FF", border: "1px solid #90CAF9", borderRadius: 8, fontSize: 12.5, lineHeight: 1.55, marginBottom: 18 }}>
+          <strong>Survey-backed LMPI. </strong>
+          Factor scores come from Delhi passenger responses. Daily ridership remains a scenario scale.
+        </div>
+      )}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 14 }}>
+        <Card style={{ padding: 16 }}>
+          <div style={{ fontSize: 12, color: "var(--text-secondary)" }}>LMPI index</div>
+          <div className="mono" style={{ fontSize: 28, fontWeight: 700 }}>{station.lmpi_score}</div>
+          <SeverityBadge severity={station.severity_label} />
+        </Card>
+        <Card style={{ padding: 16 }}>
+          <div style={{ fontSize: 12, color: "var(--text-secondary)" }}>Chance a commuter opts in</div>
+          <div className="mono" style={{ fontSize: 28, fontWeight: 700 }}>{Math.round(station.opt_in_probability * 100)}%</div>
+        </Card>
+        <Card style={{ padding: 16 }}>
+          <div style={{ fontSize: 12, color: "var(--text-secondary)" }}>Scenario daily riders</div>
+          <div className="mono" style={{ fontSize: 28, fontWeight: 700 }}>{station.daily_riders.toLocaleString()}</div>
+        </Card>
+        <Card style={{ padding: 16 }}>
+          <div style={{ fontSize: 12, color: "var(--text-secondary)" }}>Peak trains/hr</div>
+          <div className="mono" style={{ fontSize: 28, fontWeight: 700 }}>{station.recommended_trains_hr}</div>
+        </Card>
+      </div>
+      <Card style={{ padding: 16, marginTop: 16 }}>
+        <h3 style={{ fontSize: 14, fontWeight: 700, marginBottom: 8 }}>Suggested actions</h3>
+        {station.interventions.map((iv) => (
+          <div key={iv.intervention} style={{ fontSize: 13, padding: "8px 0", borderBottom: "1px solid var(--border)" }}>
+            <div style={{ fontWeight: 600 }}>{iv.intervention}</div>
+            {iv.peak_window && (
+              <div style={{ fontSize: 11.5, color: "var(--text-secondary)", marginTop: 2 }}>Peak: {iv.peak_window}</div>
+            )}
+            {iv.rationale && (
+              <div style={{ fontSize: 11.5, color: "var(--text-secondary)", marginTop: 2 }}>{iv.rationale}</div>
+            )}
+            {(iv.fleet_count || iv.estimated_cost_lakhs) && (
+              <div style={{ fontSize: 11.5, color: "var(--text-secondary)", marginTop: 2 }}>
+                {iv.fleet_count ? `≈ ${iv.fleet_count} ${iv.fleet_type || "vehicles"}` : null}
+                {iv.fleet_count && iv.estimated_cost_lakhs ? " · " : null}
+                {iv.estimated_cost_lakhs != null ? `Rs ${iv.estimated_cost_lakhs} L` : null}
+              </div>
+            )}
+          </div>
+        ))}
+      </Card>
+    </div>
+  );
+}
+
+function MumbaiStationDetail() {
   const { name } = useParams();
   const navigate = useNavigate();
   const [allStations, setAllStations] = useState(null);

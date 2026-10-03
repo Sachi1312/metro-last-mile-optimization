@@ -14,8 +14,17 @@ export function severityColor(severity) {
 const LINE_COLORS = {
   1: "#e67e22",
   "2A": "#27ae60",
-  7: "#8e44ad",
+  "2B": "#f1c40f",
   3: "#2980b9",
+  4: "#16a085",
+  5: "#1abc9c",
+  6: "#e84393",
+  7: "#8e44ad",
+  "7A": "#9b59b6",
+  9: "#c0392b",
+  Red: "#e74c3c",
+  Yellow: "#f1c40f",
+  Blue: "#2980b9",
 };
 
 export function lineColor(line) {

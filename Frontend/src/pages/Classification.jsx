@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import api from "../api.js";
 import { Card, PageHeader, StatTile } from "../components/ui.jsx";
 import { Loading, ErrorState } from "../components/StatusStates.jsx";
+import { useNetwork } from "../context/NetworkContext.jsx";
+import SyntheticBanner from "../components/SyntheticBanner.jsx";
 
 // Friendlier labels for a few known feature columns; anything else falls back
 // to a title-cased version of the raw column name.
@@ -25,6 +27,64 @@ function featureLabel(key) {
 }
 
 export default function Classification() {
+  const { expansion } = useNetwork();
+  if (expansion) return <ExpansionClassification />;
+  return <MumbaiClassification />;
+}
+
+function ExpansionClassification() {
+  const { network, synthetic, surveyBacked } = useNetwork();
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    api
+      .expansionClassification(network)
+      .then((res) => setData(res.data))
+      .catch((e) => setError(e.message));
+  }, [network]);
+
+  if (error) return <ErrorState message={error} />;
+  if (!data) return <Loading label="Loading classification" />;
+
+  const clean = data.evaluation.clean;
+  const published = data.evaluation.published;
+  return (
+    <div>
+      <PageHeader
+        title="Classification"
+        subtitle={
+          network === "delhi"
+            ? "Delhi severity is survey-backed LMPI. Groups below are what clustering found without that label."
+            : "The severity colors are the LMPI formula. The groups below are what clustering found without that label."
+        }
+      />
+      {synthetic && <SyntheticBanner>{data.note}</SyntheticBanner>}
+      {network === "delhi" && surveyBacked && (
+        <div style={{ padding: "12px 16px", background: "#EEF6FF", border: "1px solid #90CAF9", borderRadius: 8, fontSize: 12.5, lineHeight: 1.55, marginBottom: 18 }}>
+          <strong>Survey-backed severity. </strong>
+          Same LMPI formula as Mumbai, computed from Delhi passenger responses.
+        </div>
+      )}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 14, marginBottom: 18 }}>
+        <StatTile label="Published model accuracy" value={`${Math.round(published.accuracy * 1000) / 10}%`} sub="Can see LMPI ingredients" />
+        <StatTile label="Clean model accuracy" value={`${Math.round(clean.accuracy * 1000) / 10}%`} sub="Station facts only" />
+        <StatTile label="Clean F1" value={`${Math.round(clean.f1_weighted * 1000) / 10}%`} />
+      </div>
+      <Card style={{ padding: 18, marginBottom: 16 }}>
+        <h3 style={{ fontSize: 14, fontWeight: 700, marginBottom: 8 }}>Discovered groups on this network</h3>
+        {Object.entries(data.clusters).map(([name, count]) => (
+          <div key={name} style={{ display: "flex", justifyContent: "space-between", padding: "6px 0", borderBottom: "1px solid var(--border)", fontSize: 13 }}>
+            <span>{name}</span>
+            <span className="mono">{count}</span>
+          </div>
+        ))}
+      </Card>
+    </div>
+  );
+}
+
+function MumbaiClassification() {
   const [summary, setSummary] = useState(null);
   const [details, setDetails] = useState(null);
   const [error, setError] = useState(null);

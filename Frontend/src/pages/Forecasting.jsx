@@ -10,6 +10,8 @@ import {
 import api from "../api.js";
 import { Card, PageHeader, StatTile } from "../components/ui.jsx";
 import { Loading, ErrorState } from "../components/StatusStates.jsx";
+import { useNetwork } from "../context/NetworkContext.jsx";
+import SyntheticBanner from "../components/SyntheticBanner.jsx";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
 
@@ -23,6 +25,86 @@ const SEASONAL_EFFECTS = [
 ];
 
 export default function Forecasting() {
+  const { expansion } = useNetwork();
+  if (expansion) return <ExpansionForecast />;
+  return <MumbaiForecast />;
+}
+
+function ExpansionForecast() {
+  const { network, synthetic, surveyBacked } = useNetwork();
+  const [stations, setStations] = useState(null);
+  const [selected, setSelected] = useState("");
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    api
+      .expansionStations(network)
+      .then((res) => {
+        setStations(res.data.stations);
+        setSelected(res.data.stations[0]?.station_name || "");
+      })
+      .catch((e) => setError(e.message));
+  }, [network]);
+
+  useEffect(() => {
+    if (!selected) return;
+    api
+      .expansionForecast(selected, network)
+      .then((res) => setData(res.data))
+      .catch((e) => setError(e.message));
+  }, [selected, network]);
+
+  if (error) return <ErrorState message={error} />;
+  if (!data) return <Loading label="Loading scenario forecast" />;
+
+  return (
+    <div>
+      <PageHeader
+        title="Forecasting"
+        subtitle={
+          network === "delhi"
+            ? "30-day scenario footfall for Delhi stations. Severity is survey-backed; ridership scale is still scenario-based."
+            : "30-day scenario from this station's own daily level. Not the 2.64% Mumbai model."
+        }
+        right={
+          stations && (
+            <select value={selected} onChange={(e) => setSelected(e.target.value)} style={selectStyle}>
+              {stations.map((s) => (
+                <option key={s.station_name} value={s.station_name}>
+                  {s.station_name}
+                </option>
+              ))}
+            </select>
+          )
+        }
+      />
+      {synthetic && <SyntheticBanner>{data.note}</SyntheticBanner>}
+      {network === "delhi" && surveyBacked && (
+        <div style={{ padding: "12px 16px", background: "#EEF6FF", border: "1px solid #90CAF9", borderRadius: 8, fontSize: 12.5, lineHeight: 1.55, marginBottom: 18 }}>
+          <strong>Survey-backed severity; scenario ridership. </strong>
+          {data.note}
+        </div>
+      )}
+      <Card style={{ padding: 20 }}>
+        <h3 style={{ fontSize: 14, fontWeight: 700, marginBottom: 12 }}>{data.station_name}</h3>
+        <MonthlyChart monthly={(data.forecast || []).map((d) => ({ month: d.date.slice(5), avg_footfall: d.footfall }))} />
+      </Card>
+    </div>
+  );
+}
+
+const selectStyle = {
+  padding: "9px 14px",
+  borderRadius: 8,
+  border: "1px solid var(--border)",
+  background: "var(--card)",
+  fontSize: 13.5,
+  fontWeight: 500,
+  minWidth: 220,
+};
+
+function MumbaiForecast() {
   const [allStations, setAllStations] = useState(null);
   const [selected, setSelected] = useState("");
   const [data, setData] = useState(null);

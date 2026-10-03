@@ -15,10 +15,13 @@ export const ASSUMED_UNIT_COST_LAKHS = {
 const AUTO_FLEET_INTERVENTIONS = [
   "deploy pre-positioned auto fleet at peak hours",
   "auto aggregator partnership (ola/uber/rapido)",
+  "pre-position auto and e-rickshaw bays at the exit",
+  "partner with cab aggregators for guaranteed peak pickup slots",
 ];
 const BUS_FLEET_INTERVENTIONS = [
   "add dedicated best bus feeder route",
   "campus shuttle bus within midc estate",
+  "add a feeder bus timed to the peak headway",
 ];
 
 export function fleetTypeFor(interventionText) {
@@ -37,7 +40,18 @@ export function estimateFleetCount(interventionText, estimatedCostLakhs) {
 }
 
 export function fleetLabel(type) {
-  return type === "auto" ? "autos/e-rickshaws" : type === "bus" ? "buses/shuttles" : "vehicles";
+  if (type === "auto") return "autos/e-rickshaws";
+  if (type === "bus") return "buses/shuttles";
+  if (type === "cab") return "cab slots";
+  return "vehicles";
+}
+
+/** Prefer API-provided fleet sizing (expansion); fall back to cost heuristic (Mumbai 69). */
+export function resolveFleet(iv) {
+  if (iv?.fleet_count && iv?.fleet_type) {
+    return { type: iv.fleet_type, count: iv.fleet_count };
+  }
+  return estimateFleetCount(iv?.intervention, iv?.estimated_cost_lakhs);
 }
 
 // Aggregate fleet counts across a list of interventions (each with `intervention` and
