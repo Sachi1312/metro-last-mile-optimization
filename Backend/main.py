@@ -647,6 +647,198 @@ def get_festival_impact(festival_name: str):
     }
 
 # ══════════════════════════════════════════════════════════════
+# DAILY IMPACT — normal-day resource diversion (Mumbai 69 only)
+# Rank stations by load in a weekday/weekend time window so spare
+# trains/autos/buses can move from quiet stations to busy ones.
+# ══════════════════════════════════════════════════════════════
+DAILY_WINDOWS = {
+    "morning_peak": {"label": "Morning peak", "hours": [8, 9, 10]},
+    "midday": {"label": "Midday", "hours": [11, 12, 13, 14, 15, 16]},
+    "evening_peak": {"label": "Evening peak", "hours": [17, 18, 19, 20]},
+    "late_night": {"label": "Late night / early", "hours": [5, 6, 7, 21, 22, 23]},
+}
+DAILY_DAY_TYPES = {
+    "weekday": "Weekday",
+    "weekend": "Weekend",
+}
+
+
+@app.get("/daily-impact/windows")
+def get_daily_impact_windows():
+    """Day types and time windows available for Daily Impact (Mumbai 69)."""
+    return {
+        "day_types": [{"id": k, "label": v} for k, v in DAILY_DAY_TYPES.items()],
+        "windows": [
+            {"id": k, "label": v["label"], "hours": v["hours"]}
+            for k, v in DAILY_WINDOWS.items()
+        ],
+    }
+
+
+@app.get("/daily-impact")
+def get_daily_impact(
+    day_type: str = Query("weekday", description="weekday or weekend"),
+    window: str = Query("morning_peak", description="morning_peak|midday|evening_peak|late_night"),
+):
+    """
+    Rank Mumbai 69 stations by how much of each station's own normal day falls in the
+    selected time window (festival days excluded). High share = peaking now (receive
+    diverted capacity); low share = soft now relative to its own day (can divert away).
+    Absolute window riders are returned as secondary context.
+    """
+    day_type = day_type.lower().strip()
+    window = window.lower().strip()
+    if day_type not in DAILY_DAY_TYPES:
+        raise HTTPException(status_code=400, detail="day_type must be weekday or weekend")
+    if window not in DAILY_WINDOWS:
+        raise HTTPException(
+            status_code=400,
+            detail="window must be morning_peak, midday, evening_peak, or late_night",
+        )
+
+    hours = DAILY_WINDOWS[window]["hours"]
+    freq_window = window if window in ("morning_peak", "evening_peak", "midday", "late_night") else "morning_peak"
+
+    # Per station-date: full-day total + window total → share of own day.
+    pipeline = [
+        {
+            "$match": {
+                "day_type": day_type,
+                "is_festival": {"$ne": 1},
+            }
+        },
+        {
+            "$group": {
+                "_id": {
+                    "station_name": "$station_name",
+                    "line": "$line",
+                    "date": "$date",
+                },
+                "day_total": {"$sum": "$hourly_footfall"},
+                "window_footfall": {
+                    "$sum": {
+                        "$cond": [
+                            {"$in": ["$hour", hours]},
+                            "$hourly_footfall",
+                            0,
+                        ]
+                    }
+                },
+            }
+        },
+        {
+            "$project": {
+                "station_name": "$_id.station_name",
+                "line": "$_id.line",
+                "day_total": 1,
+                "window_footfall": 1,
+                "share": {
+                    "$cond": [
+                        {"$gt": ["$day_total", 0]},
+                        {"$divide": ["$window_footfall", "$day_total"]},
+                        0,
+                    ]
+                },
+            }
+        },
+        {
+            "$group": {
+                "_id": {"station_name": "$station_name", "line": "$line"},
+                "avg_window_footfall": {"$avg": "$window_footfall"},
+                "avg_day_total": {"$avg": "$day_total"},
+                "avg_window_share": {"$avg": "$share"},
+                "days": {"$sum": 1},
+            }
+        },
+    ]
+    rows = list(db["hourly_ridership"].aggregate(pipeline, allowDiskUse=True))
+    if not rows:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No hourly ridership for day_type={day_type}, window={window}",
+        )
+
+    freq_map = {
+        d["station_name"]: d
+        for d in db["results_frequency"].find({"time_window": freq_window}, {"_id": 0})
+    }
+    lmpi_map = {d["station_name"]: d for d in db["lmpi_scores"].find({}, {"_id": 0})}
+
+    stations = []
+    for r in rows:
+        name = r["_id"]["station_name"]
+        line = r["_id"].get("line")
+        avg_load = float(r["avg_window_footfall"] or 0)
+        avg_share = float(r["avg_window_share"] or 0)
+        freq = freq_map.get(name, {})
+        lmpi = lmpi_map.get(name, {})
+        current_trains = freq.get("current_trains_hr")
+        stations.append({
+            "station_name": name,
+            "line": line,
+            "severity_label": lmpi.get("severity_label"),
+            "avg_window_footfall": round(avg_load),
+            "avg_day_total": round(float(r["avg_day_total"] or 0)),
+            "avg_window_share": round(avg_share, 4),
+            "avg_window_share_pct": round(avg_share * 100, 1),
+            "days_sampled": int(r["days"]),
+            "current_trains_hr": current_trains,
+            "recommended_trains_hr": freq.get("recommended_trains_hr"),
+        })
+
+    # Rank by share of own day (not absolute size) so spare/peak lists change by window.
+    stations.sort(key=lambda s: s["avg_window_share"], reverse=True)
+    n = len(stations)
+    network_avg_share = sum(s["avg_window_share"] for s in stations) / n if n else 0
+    network_avg_load = sum(s["avg_window_footfall"] for s in stations) / n if n else 0
+
+    for s in stations:
+        share_rel = (
+            (s["avg_window_share"] - network_avg_share) / network_avg_share
+            if network_avg_share
+            else 0
+        )
+        load_rel = (
+            (s["avg_window_footfall"] - network_avg_load) / network_avg_load
+            if network_avg_load
+            else 0
+        )
+        current = s.get("current_trains_hr")
+        # Shift suggestion follows share vs network (peaking now → positive).
+        s["share_vs_network_pct"] = round(share_rel * 100, 1)
+        s["load_vs_network_pct"] = round(load_rel * 100, 1)
+        s["suggested_shift_trains_hr"] = (
+            round(current * share_rel, 1) if current is not None else None
+        )
+        s["vs_network_avg"] = round(s["avg_window_footfall"] - network_avg_load)
+
+    surge = stations[: max(1, n // 4)]
+    quiet = stations[-max(1, n // 4) :][::-1]
+
+    return {
+        "day_type": day_type,
+        "day_type_label": DAILY_DAY_TYPES[day_type],
+        "window": window,
+        "window_label": DAILY_WINDOWS[window]["label"],
+        "hours": hours,
+        "station_count": n,
+        "network_avg_window_share_pct": round(network_avg_share * 100, 1),
+        "network_avg_window_footfall": round(network_avg_load),
+        "stations": stations,
+        "surge_stations": surge,
+        "quiet_stations": quiet,
+        "ranking": "window_share_of_own_day",
+        "caveat": (
+            "Stations are ranked by how large a share of their own normal-day traffic falls "
+            f"in this window on non-festival {day_type}s (hours {hours[0]}–{hours[-1]}), "
+            "not by absolute station size. That way spare capacity moves as the day progresses "
+            "(a busy hub can be soft late at night). Absolute riders are shown as context. "
+            "Planning aid only — not live AFCS."
+        ),
+    }
+
+
+# ══════════════════════════════════════════════════════════════
 # EXPANSION — Delhi, future Mumbai, choice model, evaluation
 # File-backed so these scenario results stay separate from the
 # original Mongo collections for the 69 stations.

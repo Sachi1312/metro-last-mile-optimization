@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { to: "/interventions", label: "Interventions", icon: "wrench" },
   { to: "/interchange", label: "Interchange Sync", icon: "swap" },
   { to: "/festivals", label: "Festival Impact", icon: "spark" },
+  { to: "/daily-impact", label: "Daily Impact", icon: "clock", mumbai69Only: true },
   { to: "/future-impact", label: "Future Impact", icon: "spark", mumbaiOnly: true },
   { to: "/models", label: "Model Comparison", icon: "compare" },
 ];
@@ -54,6 +55,12 @@ const ICONS = {
   spark: (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
       <path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8" />
+    </svg>
+  ),
+  clock: (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
     </svg>
   ),
   compare: (
@@ -129,7 +136,11 @@ export default function Sidebar() {
       </div>
 
       <nav style={{ padding: 12, display: "flex", flexDirection: "column", gap: 2, flex: 1, overflowY: "auto" }}>
-        {NAV_ITEMS.filter((item) => !item.mumbaiOnly || network !== "delhi").map((item) => (
+        {NAV_ITEMS.filter((item) => {
+          if (item.mumbai69Only) return network === "mumbai69";
+          if (item.mumbaiOnly) return network !== "delhi";
+          return true;
+        }).map((item) => (
           <NavLink
             key={item.to}
             to={item.to}

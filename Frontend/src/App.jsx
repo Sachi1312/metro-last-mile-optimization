@@ -7,6 +7,7 @@ import Forecasting from "./pages/Forecasting.jsx";
 import Interventions from "./pages/Interventions.jsx";
 import InterchangeSync from "./pages/InterchangeSync.jsx";
 import FestivalImpact from "./pages/FestivalImpact.jsx";
+import DailyImpact from "./pages/DailyImpact.jsx";
 import ModelComparison from "./pages/ModelComparison.jsx";
 import FutureImpact from "./pages/FutureImpact.jsx";
 import { NetworkProvider } from "./context/NetworkContext.jsx";
@@ -43,6 +44,7 @@ export default function App() {
             <Route path="/interventions" element={<Interventions />} />
             <Route path="/interchange" element={<InterchangeSync />} />
             <Route path="/festivals" element={<FestivalImpact />} />
+            <Route path="/daily-impact" element={<DailyImpact />} />
             <Route path="/future-impact" element={<FutureImpact />} />
             <Route path="/models" element={<ModelComparison />} />
           </Routes>

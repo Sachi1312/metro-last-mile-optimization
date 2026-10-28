@@ -28,6 +28,9 @@ export const api = {
   modelComparison: () => client.get("/models/comparison"),
   festivals: () => client.get("/festivals"),
   festivalImpact: (festivalName) => client.get(`/festivals/${encodeURIComponent(festivalName)}`),
+  dailyImpactWindows: () => client.get("/daily-impact/windows"),
+  dailyImpact: (dayType, window) =>
+    client.get("/daily-impact", { params: { day_type: dayType, window } }),
   expansionNetworks: () => client.get("/expansion/networks"),
   expansionStations: (network) => client.get("/expansion/stations", { params: { network } }),
   expansionStation: (name, network) =>
