@@ -166,9 +166,9 @@ Use the sidebar network menu to switch. Orange “synthetic” banners apply onl
 Alongside Festival Impact, the dashboard includes **Daily Impact** for normal days on the original 69 stations:
 
 - Choose **weekday / weekend** and a **time window** (morning peak, midday, evening peak, late night / early).
-- Stations are ranked by **share of their own daily ridership** in that window — not by absolute station size — so spare/peak lists change as the day progresses.
-- **Peaking now** stations receive diverted trains / autos / buses; **soft now** stations are the diversion source.
-- Uses historical hourly averages as a planning aid (not live AFCS). Hidden when Delhi or future Mumbai is selected.
+- Stations are ranked by **share of their own daily ridership** in that window — not by absolute station size — so peaking/soft lists change as the day progresses.
+- **Feeder divert** priority (−3…+3) suggests moving **autos, taxis, and buses** from soft station exits toward peaking ones in the same window (last-mile supply around metro stations — not train frequency). Short lists step as +3/+2/+1 and −3/−2/−1.
+- Uses historical hourly averages as a planning aid (not live AFCS or fleet dispatch). Hidden when Delhi or future Mumbai is selected.
 
 ---
 
@@ -196,7 +196,7 @@ Core Mumbai endpoints:
 | GET | `/models/comparison` | Classification + forecasting comparison |
 | GET | `/festivals` / `/festivals/{name}` | Festival Impact ranking |
 | GET | `/daily-impact/windows` | Day types + time windows for Daily Impact |
-| GET | `/daily-impact?day_type=&window=` | Daily Impact share-based diversion ranking (Mumbai 69) |
+| GET | `/daily-impact?day_type=&window=` | Daily Impact share-based feeder divert ranking (Mumbai 69) |
 
 Expansion endpoints (Delhi + future Mumbai): `/expansion/stations`, `/expansion/evaluation`, `/expansion/forecast`, `/expansion/festivals`, `/expansion/interventions`, `/expansion/interchange`, and related routes. Query with `?network=delhi` or `?network=mumbai_future`.
 
@@ -327,7 +327,7 @@ bundle — not the full ML stack in the root `requirements.txt`.
   - Combined Mumbai+Delhi clean CV
   - Future Mumbai formula-agreement transfer check
 - On Mumbai 69, **Future Impact** shows extra riders only at stations where a new line meets the existing network.
-- On Mumbai 69, **Daily Impact** reallocates capacity within a normal day by time window (share of own day); **Festival Impact** remains for festival-day surges.
+- On Mumbai 69, **Daily Impact** redirects last-mile feeders (auto/taxi/bus) within a normal day by time window (share of own day); **Festival Impact** remains for festival-day surges.
 
 ---
 
