@@ -803,17 +803,35 @@ def get_daily_impact(
             if network_avg_load
             else 0
         )
-        current = s.get("current_trains_hr")
-        # Shift suggestion follows share vs network (peaking now → positive).
         s["share_vs_network_pct"] = round(share_rel * 100, 1)
         s["load_vs_network_pct"] = round(load_rel * 100, 1)
-        s["suggested_shift_trains_hr"] = (
-            round(current * share_rel, 1) if current is not None else None
-        )
         s["vs_network_avg"] = round(s["avg_window_footfall"] - network_avg_load)
 
-    surge = stations[: max(1, n // 4)]
-    quiet = stations[-max(1, n // 4) :][::-1]
+    # Feeder divert priority from share-of-own-day quartiles
+    # (stations already sorted high→low share). Field kept as
+    # suggested_shift_trains_hr for API stability; value is last-mile
+    # auto/taxi/bus pull(+)/send(−) priority, not metro frequency.
+    q = max(1, n // 4)
+
+    def _feeder_priority(rank_in_group, group_size):
+        """Map rank 0 (strongest) → 3, then 2, then 1 for the rest of the quartile.
+        Short lists (top 3) therefore read +3/+2/+1 or −3/−2/−1, not all extremes."""
+        return float(max(1, 3 - rank_in_group))
+
+    for i, s in enumerate(stations):
+        if s.get("current_trains_hr") is None:
+            s["suggested_shift_trains_hr"] = None
+            continue
+        if i < q:
+            s["suggested_shift_trains_hr"] = _feeder_priority(i, q)
+        elif i >= n - q:
+            soft_rank = n - 1 - i  # 0 = softest
+            s["suggested_shift_trains_hr"] = -_feeder_priority(soft_rank, q)
+        else:
+            s["suggested_shift_trains_hr"] = 0.0
+
+    surge = stations[:q]
+    quiet = stations[-q:][::-1]
 
     return {
         "day_type": day_type,
@@ -831,9 +849,10 @@ def get_daily_impact(
         "caveat": (
             "Stations are ranked by how large a share of their own normal-day traffic falls "
             f"in this window on non-festival {day_type}s (hours {hours[0]}–{hours[-1]}), "
-            "not by absolute station size. That way spare capacity moves as the day progresses "
-            "(a busy hub can be soft late at night). Absolute riders are shown as context. "
-            "Planning aid only — not live AFCS."
+            "not by absolute station size. Feeder divert priority (+3…−3) suggests moving "
+            "autos, taxis, and buses from soft station exits toward peaking ones in the same "
+            "window — last-mile supply around metro stations, not train frequency. "
+            "Planning aid only — not live AFCS or fleet dispatch."
         ),
     }
 
